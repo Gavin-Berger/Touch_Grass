@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'
 
 export default function Index() {
@@ -7,6 +7,14 @@ export default function Index() {
       <Text style={styles.text}>Touch Grass</Text>
       <View style={styles.iconContainer}>
         <MaterialIcons name="grass" size={240} color="#fff" />
+      </View>
+      <View style={styles.circle}>
+        <TouchableOpacity style={[styles.button, styles.topButton]}>
+          <MaterialIcons name="directions-run" size={50} color="#fff" />
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.button, styles.bottomButton]}>
+          <MaterialIcons name="timer" size={50} color="#fff" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -38,5 +46,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     paddingTop: 100,
+  },
+  circle: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    overflow: 'hidden',
+    borderColor: '148F77',
+    borderWidth: 2,
+    marginTop: 10,
+    marginBottom: 50,
+  },
+  button: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  topButton: {
+    backgroundColor: '#148F77',
+  },
+  bottomButton: {
+    backgroundColor: '#1E90FF',
   },
 });

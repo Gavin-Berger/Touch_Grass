@@ -63,9 +63,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   topButton: {
-    backgroundColor: '#148F77',
+    backgroundColor: '#1E90FF',
   },
   bottomButton: {
-    backgroundColor: '#1E90FF',
+    backgroundColor: '#148F77',
   },
 });

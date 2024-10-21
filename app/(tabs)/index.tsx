@@ -1,7 +1,10 @@
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
 export default function Index() {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Touch Grass</Text>
@@ -9,10 +12,16 @@ export default function Index() {
         <MaterialIcons name="grass" size={240} color="#fff" />
       </View>
       <View style={styles.circle}>
-        <TouchableOpacity style={[styles.button, styles.topButton]}>
+        <TouchableOpacity
+          style={[styles.button, styles.topButton]}
+          onPress={() => router.push("/about")} // Navigate to About screen
+        >
           <MaterialIcons name="directions-run" size={50} color="#fff" />
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.bottomButton]}>
+        <TouchableOpacity
+          style={[styles.button, styles.bottomButton]}
+          onPress={() => router.push("/timer")} // Navigate to Timer screen
+        >
           <MaterialIcons name="timer" size={50} color="#fff" />
         </TouchableOpacity>
       </View>

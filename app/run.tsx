@@ -12,8 +12,20 @@ const App: React.FC = () => {
     const [startTimestamp, setStartTimestamp] = useState<Date | null>(null);
     const router = useRouter();
 
+    interface StepSubscription {
+        remove: () => void;
+    }
+
     useEffect(() => {
-        let pollingInterval: NodeJS.Timeout | null = null;
+        let subscription: StepSubscription | null = null;
+
+        const checkPedometerAvailability = async () => {
+            const isAvailable = await Pedometer.isAvailableAsync();
+            setIsPedometerAvailable(isAvailable);
+            if (!isAvailable) {
+                console.error('Pedometer is not available.');
+            }
+        };
 
         const getPermissions = async () => {
             if (Platform.OS === 'ios') {
@@ -25,39 +37,27 @@ const App: React.FC = () => {
             }
         };
 
-        const startPollingSteps = async () => {
-            const isAvailable = await Pedometer.isAvailableAsync();
-            if (!isAvailable) {
-                console.error('Pedometer is not available on this device.');
-                setIsPedometerAvailable(false);
-                return;
-            }
-            setIsPedometerAvailable(true);
-
-            pollingInterval = setInterval(async () => {
+        const startStepCounting = () => {
+            subscription = Pedometer.watchStepCount(result => {
                 if (isCounting) {
-                    if (startTimestamp) {
-                        const result = await Pedometer.getStepCountAsync(startTimestamp, new Date());
-                        setSteps(result.steps || 0);
-                    }
+                    setSteps(result.steps || 0);
                 }
-            }, 500);
+            });
         };
 
+        checkPedometerAvailability();
         getPermissions();
-        startPollingSteps();
+        startStepCounting();
 
         return () => {
-            if (pollingInterval) {
-                clearInterval(pollingInterval);
-            }
+            if (subscription) subscription.remove();
         };
     }, [isCounting, startTimestamp]);
 
     const handleStart = () => {
         setIsCounting(true);
         setIsPaused(false);
-        setStartTimestamp(new Date());
+        setSteps(0);
     };
 
     const handlePause = () => {
@@ -88,7 +88,7 @@ const App: React.FC = () => {
                 <Text style={styles.steps}>Pedometer not available.</Text>
             )}
             <View style={styles.buttonContainer}>
-                {!isPaused ? (
+                {isPaused ? (
                     <TouchableOpacity style={styles.pauseButton} onPress={handlePause}>
                         <Text style={styles.buttonText}>Pause</Text>
                     </TouchableOpacity>
@@ -96,7 +96,11 @@ const App: React.FC = () => {
                     <TouchableOpacity style={styles.resumeButton} onPress={handleStart}>
                         <Text style={styles.buttonText}>Resume</Text>
                     </TouchableOpacity>
-                )}
+                )
+            }
+                <TouchableOpacity style={styles.pauseButton} onPress={handlePause}>
+                    <Text style={styles.buttonText}>Pause</Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.stopButton} onPress={handleStop}>
                     <Text style={styles.buttonText}>Stop</Text>
                 </TouchableOpacity>

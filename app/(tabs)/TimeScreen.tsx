@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Pedometer } from 'expo-sensors';
 
 export default function TimerScreen() {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [hours, setHours] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const intervalRef = useRef<NodeJS.Timer | null>(null); // Store interval ID
+  const [stepCount, setStepCount] = useState(0);
+  const intervalRef = useRef<number | null>(null);
+  const [isPedometerAvailable, setIsPedometerAvailable] = useState<boolean | null>(null);
 
   // Start or stop the timer based on `isRunning`
   useEffect(() => {
@@ -14,11 +17,18 @@ export default function TimerScreen() {
       intervalRef.current = setInterval(() => {
         setSeconds((prev) => prev + 1);
       }, 1000);
-    } else if (intervalRef.current) {
+      startStepCounting();
+    } else if (intervalRef.current !== null) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
+      stopStepCounting();
     }
-    return () => clearInterval(intervalRef.current); // Cleanup on unmount
+
+    return () => {
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+      }
+    };
   }, [isRunning]);
 
   // Handle minutes and hours incrementing when needed
@@ -36,13 +46,37 @@ export default function TimerScreen() {
     }
   }, [minutes]);
 
+  // Function to toggle the timer on and off
   const toggleTimer = () => setIsRunning((prev) => !prev);
 
+  // Function to reset the timer and steps
   const resetTimer = () => {
     setIsRunning(false);
+    if (intervalRef.current !== null) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
     setSeconds(0);
     setMinutes(0);
     setHours(0);
+    setStepCount(0);
+  };
+
+  // Start counting steps using Pedometer
+  const startStepCounting = async () => {
+    const isAvailable = await Pedometer.isAvailableAsync();
+    setIsPedometerAvailable(isAvailable);
+
+    if (isAvailable) {
+      Pedometer.watchStepCount(result => {
+        setStepCount(prevStepCount => prevStepCount + result.steps);
+      });
+    }
+  };
+
+  // Stop counting steps
+  const stopStepCounting = () => {
+    Pedometer.stopObserving(); // Stops pedometer updates
   };
 
   return (
@@ -51,6 +85,11 @@ export default function TimerScreen() {
         {`${hours.toString().padStart(2, '0')}:${minutes
           .toString()
           .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}
+      </Text>
+      <Text style={styles.stepText}>
+        {isPedometerAvailable === false
+          ? 'Pedometer not available'
+          : `Steps: ${stepCount}`}
       </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={toggleTimer} style={styles.button}>
@@ -76,6 +115,11 @@ const styles = StyleSheet.create({
   timeText: {
     color: '#fff',
     fontSize: 48,
+    marginBottom: 20,
+  },
+  stepText: {
+    color: '#fff',
+    fontSize: 24,
     marginBottom: 20,
   },
   buttonContainer: {

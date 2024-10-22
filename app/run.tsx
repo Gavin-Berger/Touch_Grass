@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Platform, Button } from 'react-native';
+import { StyleSheet, Text, View, Platform, Button, TouchableOpacity } from 'react-native';
 import { Pedometer } from 'expo-sensors';
 import { useRouter } from 'expo-router';
 
@@ -88,9 +88,18 @@ const App: React.FC = () => {
                 <Text style={styles.steps}>Pedometer not available.</Text>
             )}
             <View style={styles.buttonContainer}>
-                {isPaused && <Button title="Start" onPress={handleStart} />}
-                <Button title="Pause" onPress={handlePause} />
-                <Button title="Stop" onPress={handleStop} />
+                {!isPaused ? (
+                    <TouchableOpacity style={styles.pauseButton} onPress={handlePause}>
+                        <Text style={styles.buttonText}>Pause</Text>
+                    </TouchableOpacity>
+                ) : (
+                    <TouchableOpacity style={styles.resumeButton} onPress={handleStart}>
+                        <Text style={styles.buttonText}>Resume</Text>
+                    </TouchableOpacity>
+                )}
+                <TouchableOpacity style={styles.stopButton} onPress={handleStop}>
+                    <Text style={styles.buttonText}>Stop</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -118,6 +127,36 @@ const styles = StyleSheet.create({
         marginTop: 20,
         width: '100%',
         paddingHorizontal: 20,
+        alignItems: 'center',
+    },
+    stopButton: {
+        backgroundColor: '#8B0000',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginVertical: 10,
+    },
+    pauseButton: {
+        backgroundColor: '#FCAE1E',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginVertical: 10,
+    },
+    resumeButton: {
+        backgroundColor: '#148F77',
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginVertical: 10,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
     },
 });
 

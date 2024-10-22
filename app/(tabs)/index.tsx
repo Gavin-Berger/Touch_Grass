@@ -1,7 +1,12 @@
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'
+import { Link } from 'expo-router';
 
 export default function Index() {
+  const handlePress = () => {
+
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Touch Grass</Text>
@@ -9,12 +14,19 @@ export default function Index() {
         <MaterialIcons name="grass" size={240} color="#fff" />
       </View>
       <View style={styles.circle}>
-        <TouchableOpacity style={[styles.button, styles.topButton]}>
-          <MaterialIcons name="directions-run" size={50} color="#fff" />
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.bottomButton]}>
-          <MaterialIcons name="timer" size={50} color="#fff" />
-        </TouchableOpacity>
+        <View style={styles.halfTop}>
+            <Link href="/run" asChild>
+              <TouchableOpacity style={[styles.button, styles.topButton]}
+              onPress={handlePress}>
+                <MaterialIcons name="directions-run" size={50} color="#fff" />
+              </TouchableOpacity>
+            </Link>
+          </View>
+        <View style={styles.halfBottom}>
+          <TouchableOpacity style={[styles.button, styles.bottomButton]}>
+            <MaterialIcons name="timer" size={50} color="#fff" />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -52,20 +64,34 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 100,
     overflow: 'hidden',
-    borderColor: '148F77',
+    borderColor: '#000000',
     borderWidth: 2,
     marginTop: 10,
     marginBottom: 50,
   },
+  halfTop: {
+    height: '50%',
+    backgroundColor: '#1E90FF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  halfBottom: {
+    height: '50%',
+    backgroundColor: '#148F77',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   button: {
-    flex: 1,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   topButton: {
     backgroundColor: '#1E90FF',
+    height: '50%',
   },
   bottomButton: {
     backgroundColor: '#148F77',
+    height: '50%',
   },
 });

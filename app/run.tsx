@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Platform, Button, TouchableOpacity } from 'react-native';
 import { Pedometer } from 'expo-sensors';
 import { useRouter } from 'expo-router';
+import * as Location from 'expo-location';
 
 const App: React.FC = () => {
     const [steps, setSteps] = useState<number>(0);
@@ -32,6 +33,12 @@ const App: React.FC = () => {
                 const { granted } = await Pedometer.requestPermissionsAsync();
                 if (!granted) {
                     console.error('Permission to access pedometer not granted.');
+                    return;
+                }
+            } else if (Platform.OS === 'android') {
+                const { status: activityStatus } = await Location.requestForegroundPermissionsAsync();
+                if (activityStatus !== 'granted') {
+                    console.error('Permission to access background location not granted.');
                     return;
                 }
             }

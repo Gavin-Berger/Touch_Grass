@@ -33,12 +33,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router",
-      "@expo/vector-icons",
-      "expo-location",
-      "expo-sensors",
-      "react",
-      "react-native"
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true

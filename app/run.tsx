@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Platform, Button, TouchableOpacity } from 'react-native';
 import { Pedometer } from 'expo-sensors';
 import { useRouter } from 'expo-router';
-import * as Location from 'expo-location';
+//import * as Location from 'expo-location';
 
 const App: React.FC = () => {
     const [steps, setSteps] = useState<number>(0);

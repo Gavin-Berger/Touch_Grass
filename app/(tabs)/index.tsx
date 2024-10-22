@@ -20,7 +20,7 @@ export default function Index() {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.bottomButton]}
-          onPress={() => router.push("/timer")} // Navigate to Timer screen
+          onPress={() => router.push("/TimeScreen")} // Navigate to Timer screen
         >
           <MaterialIcons name="timer" size={50} color="#fff" />
         </TouchableOpacity>

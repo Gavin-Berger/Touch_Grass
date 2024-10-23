@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Pedometer } from 'expo-sensors';
-import * as Permissions from 'expo-permissions';
 
 export default function TimerScreen() {
   const [seconds, setSeconds] = useState(0);
@@ -11,20 +10,10 @@ export default function TimerScreen() {
   const [stepCount, setStepCount] = useState(0);
   const intervalRef = useRef<number | null>(null);
   const [isPedometerAvailable, setIsPedometerAvailable] = useState<boolean | null>(null);
-  const [hasPermission, setHasPermission] = useState(false);
-
-  useEffect(() => {
-    requestPermission(); // Request permission when component mounts
-  }, []);
-
-  const requestPermission = async () => {
-    const { status } = await Permissions.askAsync(Permissions.ACTIVITY_RECOGNITION);
-    setHasPermission(status === 'granted');
-  };
 
   // Start or stop the timer based on `isRunning`
   useEffect(() => {
-    if (isRunning && hasPermission) {
+    if (isRunning) {
       intervalRef.current = setInterval(() => {
         setSeconds((prev) => prev + 1);
       }, 1000);
@@ -40,7 +29,7 @@ export default function TimerScreen() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isRunning, hasPermission]);
+  }, [isRunning]);
 
   // Handle minutes and hours incrementing when needed
   useEffect(() => {
@@ -100,9 +89,7 @@ export default function TimerScreen() {
       <Text style={styles.stepText}>
         {isPedometerAvailable === false
           ? 'Pedometer not available'
-          : hasPermission
-          ? `Steps: ${stepCount}`
-          : 'Permission not granted for activity tracking'}
+          : `Steps: ${stepCount}`}
       </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={toggleTimer} style={styles.button}>

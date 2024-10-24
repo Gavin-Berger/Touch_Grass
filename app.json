@@ -33,7 +33,6 @@
       "expo-router"
     ],
     "experiments": {
-      "typedRoutes": true
     },
     "extra": {
       "eas": {

@@ -47,11 +47,14 @@ export default function TimerScreen() {
         const isAvailable = await Pedometer.isAvailableAsync();
         setIsPedometerAvailable(isAvailable);
 
+        console.log('Pedometer available:', isAvailable);
+
         if (isAvailable) {
           if (Platform.OS === 'android') {
             // Use watchStepCount on Android
-            pedometerSubscriptionRef.current = Pedometer.watchStepCount(result => {
-              setSteps(prevSteps => prevSteps + result.steps);
+            pedometerSubscriptionRef.current = Pedometer.watchStepCount((result) => {
+              console.log('Received steps:', result.steps);
+              setSteps((prevSteps) => prevSteps + result.steps);
             });
           } else {
             // Use getStepCountAsync on iOS
@@ -62,6 +65,7 @@ export default function TimerScreen() {
                     startTimestampRef.current,
                     new Date()
                   );
+                  console.log('Received steps:', result.steps);
                   setSteps(result.steps || 0);
                 } catch (error) {
                   console.error('Error getting step count:', error);

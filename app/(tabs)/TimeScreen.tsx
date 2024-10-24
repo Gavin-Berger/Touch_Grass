@@ -10,11 +10,11 @@ export default function TimerScreen() {
   const [isRunning, setIsRunning] = useState(false);
 
   const [steps, setSteps] = useState(0);
-  const [isPedometerAvailable, setIsPedometerAvailable] = useState(false);
-  const startTimestampRef = useRef<Date | null>(null); // Use useRef instead of useState
+  const [isPedometerAvailable, setIsPedometerAvailable] = useState<boolean | null>(null);
+  const startTimestampRef = useRef<Date | null>(null);
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const pedometerSubscriptionRef = useRef<any>(null);
 
   const router = useRouter();
 
@@ -40,37 +40,56 @@ export default function TimerScreen() {
         setSeconds((prev) => prev + 1);
       }, 1000);
 
-      // Start polling steps
-      const startPollingSteps = async () => {
+      startTimestampRef.current = new Date();
+
+      // Start step counting
+      const startStepCounting = async () => {
         const isAvailable = await Pedometer.isAvailableAsync();
         setIsPedometerAvailable(isAvailable);
 
         if (isAvailable) {
-          pollingIntervalRef.current = setInterval(async () => {
-            if (startTimestampRef.current) {
-              const result = await Pedometer.getStepCountAsync(
-                startTimestampRef.current,
-                new Date()
-              );
-              setSteps(result.steps || 0);
-            }
-          }, 500);
+          if (Platform.OS === 'android') {
+            // Use watchStepCount on Android
+            pedometerSubscriptionRef.current = Pedometer.watchStepCount(result => {
+              setSteps(prevSteps => prevSteps + result.steps);
+            });
+          } else {
+            // Use getStepCountAsync on iOS
+            pedometerSubscriptionRef.current = setInterval(async () => {
+              if (startTimestampRef.current) {
+                try {
+                  const result = await Pedometer.getStepCountAsync(
+                    startTimestampRef.current,
+                    new Date()
+                  );
+                  setSteps(result.steps || 0);
+                } catch (error) {
+                  console.error('Error getting step count:', error);
+                }
+              }
+            }, 1000);
+          }
         } else {
           console.error('Pedometer is not available on this device.');
         }
       };
-      startPollingSteps();
+      startStepCounting();
     } else {
       // Stop the timer
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
-      // Stop polling steps
-      if (pollingIntervalRef.current) {
-        clearInterval(pollingIntervalRef.current);
-        pollingIntervalRef.current = null;
+      // Stop step counting
+      if (pedometerSubscriptionRef.current) {
+        if (Platform.OS === 'android') {
+          pedometerSubscriptionRef.current.remove();
+        } else {
+          clearInterval(pedometerSubscriptionRef.current);
+        }
+        pedometerSubscriptionRef.current = null;
       }
+      startTimestampRef.current = null;
     }
 
     // Cleanup on unmount
@@ -78,11 +97,16 @@ export default function TimerScreen() {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
-      if (pollingIntervalRef.current) {
-        clearInterval(pollingIntervalRef.current);
+      if (pedometerSubscriptionRef.current) {
+        if (Platform.OS === 'android') {
+          pedometerSubscriptionRef.current.remove();
+        } else {
+          clearInterval(pedometerSubscriptionRef.current);
+        }
+        pedometerSubscriptionRef.current = null;
       }
     };
-  }, [isRunning]); // Depend only on isRunning
+  }, [isRunning]);
 
   // Handle minutes and hours incrementing
   useEffect(() => {
@@ -100,15 +124,7 @@ export default function TimerScreen() {
   }, [minutes]);
 
   const toggleTimer = () => {
-    if (!isRunning) {
-      // Starting the timer
-      startTimestampRef.current = new Date();
-      setIsRunning(true);
-    } else {
-      // Stopping the timer
-      setIsRunning(false);
-      startTimestampRef.current = null;
-    }
+    setIsRunning((prev) => !prev);
   };
 
   const resetTimer = () => {
@@ -128,10 +144,10 @@ export default function TimerScreen() {
           .toString()
           .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}
       </Text>
-      {isPedometerAvailable ? (
-        <Text style={styles.steps}>Steps: {steps}</Text>
-      ) : (
+      {isPedometerAvailable === false ? (
         <Text style={styles.steps}>Pedometer not available.</Text>
+      ) : (
+        <Text style={styles.steps}>Steps: {steps}</Text>
       )}
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={toggleTimer} style={styles.button}>

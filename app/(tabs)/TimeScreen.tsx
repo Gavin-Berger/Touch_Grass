@@ -8,30 +8,42 @@ export default function TimerScreen() {
   const [hours, setHours] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [stepCount, setStepCount] = useState(0);
-  const intervalRef = useRef<number | null>(null);
-  const [isPedometerAvailable, setIsPedometerAvailable] = useState<boolean | null>(null);
+  const [isPedometerAvailable, setIsPedometerAvailable] = useState(null);
+  const intervalRef = useRef(null);
 
-  // Start or stop the timer based on `isRunning`
+  // Store the pedometer subscription
+  const pedometerSubscription = useRef(null);
+
   useEffect(() => {
     if (isRunning) {
+      // Start the timer
       intervalRef.current = setInterval(() => {
         setSeconds((prev) => prev + 1);
       }, 1000);
+
+      // Start counting steps
       startStepCounting();
-    } else if (intervalRef.current !== null) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
+    } else {
+      // Stop the timer
+      if (intervalRef.current !== null) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+
+      // Stop counting steps
       stopStepCounting();
     }
 
+    // Cleanup when component unmounts
     return () => {
       if (intervalRef.current !== null) {
         clearInterval(intervalRef.current);
       }
+      stopStepCounting();
     };
   }, [isRunning]);
 
-  // Handle minutes and hours incrementing when needed
+  // Update minutes and hours
   useEffect(() => {
     if (seconds === 60) {
       setSeconds(0);
@@ -46,37 +58,38 @@ export default function TimerScreen() {
     }
   }, [minutes]);
 
-  // Function to toggle the timer on and off
-  const toggleTimer = () => setIsRunning((prev) => !prev);
-
-  // Function to reset the timer and steps
-  const resetTimer = () => {
-    setIsRunning(false);
-    if (intervalRef.current !== null) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-    setSeconds(0);
-    setMinutes(0);
-    setHours(0);
-    setStepCount(0);
-  };
-
-  // Start counting steps using Pedometer
+  // Start counting steps
   const startStepCounting = async () => {
     const isAvailable = await Pedometer.isAvailableAsync();
     setIsPedometerAvailable(isAvailable);
 
     if (isAvailable) {
-      Pedometer.watchStepCount(result => {
-        setStepCount(prevStepCount => prevStepCount + result.steps);
+      pedometerSubscription.current = Pedometer.watchStepCount((result) => {
+        setStepCount((prevStepCount) => prevStepCount + result.steps);
       });
+    } else {
+      console.log('Pedometer is not available on this device.');
     }
   };
 
   // Stop counting steps
   const stopStepCounting = () => {
-    Pedometer.stopObserving(); // Stops pedometer updates
+    if (pedometerSubscription.current) {
+      pedometerSubscription.current.remove();
+      pedometerSubscription.current = null;
+    }
+  };
+
+  // Toggle the timer
+  const toggleTimer = () => setIsRunning((prev) => !prev);
+
+  // Reset the timer and steps
+  const resetTimer = () => {
+    setIsRunning(false);
+    setSeconds(0);
+    setMinutes(0);
+    setHours(0);
+    setStepCount(0);
   };
 
   return (
@@ -108,9 +121,9 @@ export default function TimerScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#232323',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#232323',
   },
   timeText: {
     color: '#fff',

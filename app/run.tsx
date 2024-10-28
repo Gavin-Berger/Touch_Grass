@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Platform, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Platform, TouchableOpacity } from 'react-native';
 import { Pedometer } from 'expo-sensors';
 import { useRouter } from 'expo-router';
 
@@ -10,6 +10,9 @@ const App: React.FC = () => {
     const [sessionLog, setSessionLog] = useState<number[]>([]);
     const [isPaused, setIsPaused] = useState<boolean>(false);
     const [startTimestamp, setStartTimestamp] = useState<Date | null>(null);
+    const [seconds, setSeconds] = useState<number>(0);
+    const [minutes, setMinutes] = useState<number>(0);
+    const [hours, setHours] = useState<number>(0);
     const router = useRouter();
 
     useEffect(() => {
@@ -35,11 +38,9 @@ const App: React.FC = () => {
             setIsPedometerAvailable(true);
 
             pollingInterval = setInterval(async () => {
-                if (isCounting) {
-                    if (startTimestamp) {
-                        const result = await Pedometer.getStepCountAsync(startTimestamp, new Date());
-                        setSteps(result.steps || 0);
-                    }
+                if (isCounting && startTimestamp) {
+                    const result = await Pedometer.getStepCountAsync(startTimestamp, new Date());
+                    setSteps(result.steps || 0);
                 }
             }, 500);
         };
@@ -53,6 +54,30 @@ const App: React.FC = () => {
             }
         };
     }, [isCounting, startTimestamp]);
+
+    // Timer logic
+    useEffect(() => {
+        let timerInterval: NodeJS.Timeout | null = null;
+
+        if (isCounting && !isPaused) {
+            timerInterval = setInterval(() => {
+                setSeconds((prev) => {
+                    if (prev === 59) {
+                        setMinutes((m) => (m === 59 ? 0 : m + 1));
+                        setHours((h) => (minutes === 59 && h < 23 ? h + 1 : h));
+                        return 0;
+                    }
+                    return prev + 1;
+                });
+            }, 1000);
+        } else if (timerInterval) {
+            clearInterval(timerInterval);
+        }
+
+        return () => {
+            if (timerInterval) clearInterval(timerInterval);
+        };
+    }, [isCounting, isPaused, minutes]);
 
     const handleStart = () => {
         setIsCounting(true);
@@ -70,14 +95,11 @@ const App: React.FC = () => {
         setIsCounting(false);
         setSteps(0);
         setStartTimestamp(null);
+        setSeconds(0);
+        setMinutes(0);
+        setHours(0);
         router.push('/');
     };
-
-    useEffect(() => {
-        if (!isCounting && !isPaused) {
-            handleStart();
-        }
-    }, [isCounting]);
 
     return (
         <View style={styles.container}>
@@ -87,6 +109,11 @@ const App: React.FC = () => {
             ) : (
                 <Text style={styles.steps}>Pedometer not available.</Text>
             )}
+            <Text style={styles.timer}>
+                {`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds
+                    .toString()
+                    .padStart(2, '0')}`}
+            </Text>
             <View style={styles.buttonContainer}>
                 {!isPaused ? (
                     <TouchableOpacity style={styles.pauseButton} onPress={handlePause}>
@@ -120,6 +147,11 @@ const styles = StyleSheet.create({
     steps: {
         fontSize: 18,
         color: '#fff',
+    },
+    timer: {
+        fontSize: 24,
+        color: '#fff',
+        marginBottom: 20,
     },
     buttonContainer: {
         flexDirection: 'row',

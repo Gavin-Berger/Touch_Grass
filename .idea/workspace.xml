@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Simplify the naming conventions for creator/user benefit">
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/Log.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/Log.tsx" afterDir="false" />
+    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Merge with main branch">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,13 +92,30 @@
       <option name="project" value="LOCAL" />
       <updated>1730318846907</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Simplify the naming conventions for creator/user benefit">
+      <option name="closed" value="true" />
+      <created>1730319230180</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1730319230180</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Merge with main branch">
+      <option name="closed" value="true" />
+      <created>1730319640544</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1730319640544</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding the timer to the run function" />
     <MESSAGE value="Adding empty page for the log function" />
     <MESSAGE value="Simplify the naming conventions for creator/user benefit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Simplify the naming conventions for creator/user benefit" />
+    <MESSAGE value="Merge with main branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge with main branch" />
   </component>
 </project>

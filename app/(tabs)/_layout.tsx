@@ -35,9 +35,9 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="log-run"  // Adds log-run screen to navigation
+                name="log"  // Adds log-run screen to navigation
                 options={{
-                    title: 'Log Run',
+                    title: 'Log',
                     tabBarIcon: ({ color, focused }) => (
                         <Ionicons name={focused ? 'document-text' : 'document-outline'} color={color} size={24} />
                     ),

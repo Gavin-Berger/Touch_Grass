@@ -1,11 +1,11 @@
-// app/(tabs)/log-run.tsx
+// app/(tabs)/log.tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const LogRun: React.FC = () => {
+const Log: React.FC = () => {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Log Run</Text>
+            <Text style={styles.text}>Log</Text>
         </View>
     );
 };
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LogRun;
+export default Log;

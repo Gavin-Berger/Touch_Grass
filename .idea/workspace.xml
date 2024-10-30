@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Adding empty page for the log function" />
+    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Simplify the naming conventions for creator/user benefit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -74,12 +76,21 @@
       <option name="project" value="LOCAL" />
       <updated>1730308586669</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Simplify the naming conventions for creator/user benefit">
+      <option name="closed" value="true" />
+      <created>1730308730619</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1730308730619</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding the timer to the run function" />
     <MESSAGE value="Adding empty page for the log function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding empty page for the log function" />
+    <MESSAGE value="Simplify the naming conventions for creator/user benefit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Simplify the naming conventions for creator/user benefit" />
   </component>
 </project>

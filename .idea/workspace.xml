@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Merge with main branch">
+    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="merging with main">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/Log.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/Log.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/run.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/run.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +119,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730320453881</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="merging with main">
+      <option name="closed" value="true" />
+      <created>1730475350442</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1730475350442</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -124,6 +135,7 @@
     <MESSAGE value="Adding empty page for the log function" />
     <MESSAGE value="Simplify the naming conventions for creator/user benefit" />
     <MESSAGE value="Merge with main branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge with main branch" />
+    <MESSAGE value="merging with main" />
+    <option name="LAST_COMMIT_MESSAGE" value="merging with main" />
   </component>
 </project>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Platform, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Platform, TouchableOpacity, Button } from 'react-native';
 import { Pedometer, Accelerometer } from 'expo-sensors';
 import { useRouter } from 'expo-router';
 import * as Location from 'expo-location';

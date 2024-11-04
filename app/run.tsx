@@ -84,7 +84,7 @@ const App: React.FC = () => {
 
         //Logic to detect extra steps using accelerometer
         const detectExtraStep = (data: { x: number; y: number; z: number }) => {
-            const acceleration = Math.sqrt(data.x * data.x + data.y + data.z * data.z);
+            const acceleration = Math.sqrt(data.x * data.x + data.y * data.y + data.z * data.z);
             const stepThreshold = 1.2;
 
             if (acceleration > stepThreshold) {

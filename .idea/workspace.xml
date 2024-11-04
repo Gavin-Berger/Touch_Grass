@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="merging with Timer-Integration">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,22 +23,22 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Gershom45"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Gershom45&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/Gavin-Berger/Touch_Grass.git&quot;,
     &quot;accountId&quot;: &quot;d1b33347-6704-4f73-9cda-f7695f9f2f40&quot;
   }
 }</component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 8
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2oMnqYbDOgRDMcvLZDJ0OYOMySK" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -54,7 +53,7 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "Timer-Integration",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "show.migrate.to.gradle.popup": "false"
   }
@@ -172,7 +171,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730689016684</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="merging with Timer-Integration">
+      <option name="closed" value="true" />
+      <created>1730689578242</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1730689578242</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -182,6 +189,7 @@
     <MESSAGE value="Merge with main branch" />
     <MESSAGE value="merging with main" />
     <MESSAGE value="Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)" />
+    <MESSAGE value="merging with Timer-Integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="merging with Timer-Integration" />
   </component>
 </project>

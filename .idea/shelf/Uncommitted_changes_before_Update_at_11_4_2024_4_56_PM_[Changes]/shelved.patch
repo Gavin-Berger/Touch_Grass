@@ -1,0 +1,90 @@
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"NONE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"9f95afb3-4c80-4b89-a352-ff348bef94ec\" name=\"Changes\" comment=\"Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)\">\r\n      <change beforePath=\"$PROJECT_DIR$/package-lock.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/package-lock.json\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/package.json\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/package.json\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ClangdSettings\">\r\n    <option name=\"formatViaClangd\" value=\"false\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"TimerScreen\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\"><![CDATA[{\r\n  \"lastFilter\": {\r\n    \"state\": \"OPEN\",\r\n    \"assignee\": \"Gershom45\"\r\n  }\r\n}]]></component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Gavin-Berger/Touch_Grass.git&quot;,\r\n    &quot;accountId&quot;: &quot;d1b33347-6704-4f73-9cda-f7695f9f2f40&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"customColor\": \"\",\r\n  \"associatedIndex\": 8\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"2oMnqYbDOgRDMcvLZDJ0OYOMySK\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n    <option name=\"sortKey\" value=\"BY_TIME_DESCENDING\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"RunOnceActivity.cidr.known.project.marker\": \"true\",\r\n    \"RunOnceActivity.readMode.enableVisualFormatting\": \"true\",\r\n    \"cf.first.check.clang-format\": \"false\",\r\n    \"cidr.known.project.marker\": \"true\",\r\n    \"dart.analysis.tool.window.visible\": \"false\",\r\n    \"git-widget-placeholder\": \"Timer-Integration\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"show.migrate.to.gradle.popup\": \"false\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task id=\"LOCAL-00001\" summary=\"Adding the timer to the run function\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730143752987</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730143752987</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Adding the timer to the run function\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730143761244</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730143761244</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Adding the timer to the run function\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730145759330</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730145759330</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Adding the timer to the run function\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730146345009</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730146345009</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Adding empty page for the log function\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730308586669</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730308586669</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Simplify the naming conventions for creator/user benefit\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730308730619</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730308730619</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Simplify the naming conventions for creator/user benefit\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730318846907</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730318846907</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Simplify the naming conventions for creator/user benefit\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730319230180</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730319230180</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"Merge with main branch\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730319640544</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730319640544</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Merge with main branch\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730320453881</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730320453881</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"merging with main\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730475350442</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730475350442</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730476143946</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730476143946</updated>\r\n    </task>\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"9f95afb3-4c80-4b89-a352-ff348bef94ec\" name=\"Changes\" comment=\"Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)\" />\r\n      <created>1730688506341</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1730688506341</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730689016684</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730689016684</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"14\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Adding the timer to the run function\" />\r\n    <MESSAGE value=\"Adding empty page for the log function\" />\r\n    <MESSAGE value=\"Simplify the naming conventions for creator/user benefit\" />\r\n    <MESSAGE value=\"Merge with main branch\" />\r\n    <MESSAGE value=\"merging with main\" />\r\n    <MESSAGE value=\"Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c10155197529ab53d9d3acec765cf4761e3e77b7)
++++ b/.idea/workspace.xml	(date 1730757190279)
+@@ -4,9 +4,8 @@
+     <option name="autoReloadType" value="NONE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)">
+-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
++    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="merging with Timer-Integration">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -24,22 +23,22 @@
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+-  "lastFilter": {
+-    "state": "OPEN",
+-    "assignee": "Gershom45"
++  <component name="GitHubPullRequestSearchHistory">{
++  &quot;lastFilter&quot;: {
++    &quot;state&quot;: &quot;OPEN&quot;,
++    &quot;assignee&quot;: &quot;Gershom45&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="GithubPullRequestsUISettings">{
+   &quot;selectedUrlAndAccountId&quot;: {
+     &quot;url&quot;: &quot;https://github.com/Gavin-Berger/Touch_Grass.git&quot;,
+     &quot;accountId&quot;: &quot;d1b33347-6704-4f73-9cda-f7695f9f2f40&quot;
+   }
+ }</component>
+-  <component name="ProjectColorInfo"><![CDATA[{
+-  "customColor": "",
+-  "associatedIndex": 8
+-}]]></component>
++  <component name="ProjectColorInfo">{
++  &quot;customColor&quot;: &quot;&quot;,
++  &quot;associatedIndex&quot;: 8
++}</component>
+   <component name="ProjectId" id="2oMnqYbDOgRDMcvLZDJ0OYOMySK" />
+   <component name="ProjectViewState">
+     <option name="hideEmptyMiddlePackages" value="true" />
+@@ -54,7 +53,7 @@
+     "cf.first.check.clang-format": "false",
+     "cidr.known.project.marker": "true",
+     "dart.analysis.tool.window.visible": "false",
+-    "git-widget-placeholder": "Timer-Integration",
++    "git-widget-placeholder": "main",
+     "kotlin-language-version-configured": "true",
+     "show.migrate.to.gradle.popup": "false"
+   }
+@@ -172,7 +171,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1730689016684</updated>
+     </task>
+-    <option name="localTasksCounter" value="14" />
++    <task id="LOCAL-00014" summary="merging with Timer-Integration">
++      <option name="closed" value="true" />
++      <created>1730689578242</created>
++      <option name="number" value="00014" />
++      <option name="presentableId" value="LOCAL-00014" />
++      <option name="project" value="LOCAL" />
++      <updated>1730689578242</updated>
++    </task>
++    <option name="localTasksCounter" value="15" />
+     <servers />
+   </component>
+   <component name="VcsManagerConfiguration">
+@@ -182,6 +189,7 @@
+     <MESSAGE value="Merge with main branch" />
+     <MESSAGE value="merging with main" />
+     <MESSAGE value="Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)" />
++    <MESSAGE value="merging with Timer-Integration" />
++    <option name="LAST_COMMIT_MESSAGE" value="merging with Timer-Integration" />
+   </component>
+ </project>
+\ No newline at end of file

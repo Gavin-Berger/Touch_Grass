@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -163,7 +164,15 @@
       <option name="presentableId" value="Default" />
       <updated>1730688506341</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)">
+      <option name="closed" value="true" />
+      <created>1730689016684</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1730689016684</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

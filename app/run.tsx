@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Platform, TouchableOpacity, Button } from 'react-native';
-import { Pedometer, Accelerometer } from 'expo-sensors';
+import { StyleSheet, Text, View, Platform, Button, TouchableOpacity } from 'react-native';
+import { Pedometer } from 'expo-sensors';
 import { useRouter } from 'expo-router';
 import * as Location from 'expo-location';
 
@@ -11,23 +11,15 @@ const App: React.FC = () => {
     const [sessionLog, setSessionLog] = useState<number[]>([]);
     const [isPaused, setIsPaused] = useState<boolean>(false);
     const [startTimestamp, setStartTimestamp] = useState<Date | null>(null);
-    const [seconds, setSeconds] = useState<number>(0);
-    const [minutes, setMinutes] = useState<number>(0);
-    const [hours, setHours] = useState<number>(0);
     const router = useRouter();
-    const [accelerometerData, setAccelerometerData] = useState({ x: 0, y: 0, z: 0});
-    const [manualSteps, setManualSteps] = useState<number>(0);
-    const [pedometerSubscription, setPedometerSubscription] = useState<any>(null);
 
     interface StepSubscription {
         remove: () => void;
     }
 
     useEffect(() => {
-        let pedometerSubscription: any = null;
-        let accelerometerSubscription: any = null;
+        let subscription: StepSubscription | null = null;
 
-        //Making sure that device app is loaded on has a pedometer
         const checkPedometerAvailability = async () => {
             const isAvailable = await Pedometer.isAvailableAsync();
             setIsPedometerAvailable(isAvailable);
@@ -36,7 +28,6 @@ const App: React.FC = () => {
             }
         };
 
-        //Getting necessary permissions from user
         const getPermissions = async () => {
             if (Platform.OS === 'ios') {
                 const { granted } = await Pedometer.requestPermissionsAsync();
@@ -45,95 +36,39 @@ const App: React.FC = () => {
                     return;
                 }
             } else if (Platform.OS === 'android') {
-                const { status: locationStatus } = await Location.requestForegroundPermissionsAsync();
-                if (locationStatus !== 'granted') {
-                    console.error('Necessary permissions were not granted.');
+                const { status: activityStatus } = await Location.requestForegroundPermissionsAsync();
+                if (activityStatus !== 'granted') {
+                    console.error('Permission to access background location not granted.');
                     return;
                 }
             }
         };
 
-        interface PedometerResult {
-            steps: number;
-        }
-
-        const startPedometerTracking = async () => {
-            const isAvailable = await Pedometer.isAvailableAsync();
-            setIsPedometerAvailable(isAvailable);
-
-            if(isAvailable) {
-                const subscription = Pedometer.watchStepCount((result: PedometerResult) => {
-                    if (isCounting && !isPaused) {
-                        setSteps(result.steps + manualSteps);
-                        setManualSteps(0);
-                    }
-                });
-                setPedometerSubscription(subscription);
-            }
-        };
-
-        const startAccelerometerTracking = () => {
-            accelerometerSubscription = Accelerometer.addListener(accelerometerData => {
-                setAccelerometerData(accelerometerData);
+        const startStepCounting = () => {
+            subscription = Pedometer.watchStepCount(result => {
                 if (isCounting) {
-                    detectExtraStep(accelerometerData);
+                    setSteps(result.steps || 0);
                 }
             });
-            Accelerometer.setUpdateInterval(50);
-        };
-
-        //Logic to detect extra steps using accelerometer
-        const detectExtraStep = (data: { x: number; y: number; z: number }) => {
-            const acceleration = Math.sqrt(data.x * data.x + data.y + data.z * data.z);
-            const stepThreshold = 1.2;
-
-            if (acceleration > stepThreshold) {
-                setManualSteps(prevSteps => prevSteps + 1);
-            }
         };
 
         checkPedometerAvailability();
         getPermissions();
-        startPedometerTracking();
-        startAccelerometerTracking();
-        handleStart();
+        startStepCounting();
 
         return () => {
-            if (pedometerSubscription) pedometerSubscription.remove();
-            if (accelerometerSubscription) accelerometerSubscription.remove();
+            if (subscription) subscription.remove();
         };
-    }, [isCounting]);
-
-    // Timer logic
-    useEffect(() => {
-        let timerInterval: NodeJS.Timeout | null = null;
-
-        if (isCounting && !isPaused) {
-            timerInterval = setInterval(() => {
-                setSeconds((prev) => {
-                    if (prev === 59) {
-                        setMinutes((m) => (m === 59 ? 0 : m + 1));
-                        setHours((h) => (minutes === 59 && h < 23 ? h + 1 : h));
-                        return 0;
-                    }
-                    return prev + 1;
-                });
-            }, 1000);
-        } else if (timerInterval) {
-            clearInterval(timerInterval);
-        }
-
-        return () => {
-            if (timerInterval) clearInterval(timerInterval);
-        };
-    }, [isCounting, isPaused, minutes]);
+    }, [isCounting, startTimestamp]);
 
     const handleStart = () => {
         setIsCounting(true);
         setIsPaused(false);
+        setSteps(0);
     };
 
     const handlePause = () => {
+        setIsCounting(false);
         setIsPaused(true);
     };
 
@@ -142,11 +77,14 @@ const App: React.FC = () => {
         setIsCounting(false);
         setSteps(0);
         setStartTimestamp(null);
-        setSeconds(0);
-        setMinutes(0);
-        setHours(0);
         router.push('/');
     };
+
+    useEffect(() => {
+        if (!isCounting && !isPaused) {
+            handleStart();
+        }
+    }, [isCounting]);
 
     return (
         <View style={styles.container}>
@@ -156,21 +94,20 @@ const App: React.FC = () => {
             ) : (
                 <Text style={styles.steps}>Pedometer not available.</Text>
             )}
-            <Text style={styles.timer}>
-                {`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds
-                    .toString()
-                    .padStart(2, '0')}`}
-            </Text>
             <View style={styles.buttonContainer}>
                 {isPaused ? (
-                    <TouchableOpacity style={styles.resumeButton} onPress={handleStart}>
-                        <Text style={styles.buttonText}>Resume</Text>
-                    </TouchableOpacity>
-                ) : (
                     <TouchableOpacity style={styles.pauseButton} onPress={handlePause}>
                         <Text style={styles.buttonText}>Pause</Text>
                     </TouchableOpacity>
-                )}
+                ) : (
+                    <TouchableOpacity style={styles.resumeButton} onPress={handleStart}>
+                        <Text style={styles.buttonText}>Resume</Text>
+                    </TouchableOpacity>
+                )
+            }
+                <TouchableOpacity style={styles.pauseButton} onPress={handlePause}>
+                    <Text style={styles.buttonText}>Pause</Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.stopButton} onPress={handleStop}>
                     <Text style={styles.buttonText}>Stop</Text>
                 </TouchableOpacity>
@@ -194,11 +131,6 @@ const styles = StyleSheet.create({
     steps: {
         fontSize: 18,
         color: '#fff',
-    },
-    timer: {
-        fontSize: 24,
-        color: '#fff',
-        marginBottom: 20,
     },
     buttonContainer: {
         flexDirection: 'row',

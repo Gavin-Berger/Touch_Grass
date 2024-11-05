@@ -92,7 +92,7 @@ const App: React.FC = () => {
         //Logic to detect extra steps using accelerometer
         const detectExtraStep = (data: { x: number; y: number; z: number }) => {
             const currentTime = Date.now();
-            const stepThreshold = 44;
+            const stepThreshold = 48;
 
             smoothedData = {
                 x: smoothedData.x + lowPassFactor * (data.x - smoothedData.x),

@@ -1,25 +1,26 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Log: React.FC = () => {
-    const [sessions, setSessions] = useState<any[]>([]);
+    const [sessions, setSessions] = useState<{ steps: number; duration: string; timestamp: string }[]>([]);
 
-    // Load sessions from AsyncStorage on mount
     useEffect(() => {
         const loadSessions = async () => {
-            const savedSessions = await AsyncStorage.getItem('sessions');
-            if (savedSessions) {
-                setSessions(JSON.parse(savedSessions));
-            } else {
-                setSessions([]); // Ensures page loads even without data
+            try {
+                const savedSessions = await AsyncStorage.getItem('sessions');
+                if (savedSessions) {
+                    setSessions(JSON.parse(savedSessions));
+                } else {
+                    setSessions([]); // Load empty array if no data
+                }
+            } catch (error) {
+                console.error("Failed to load sessions:", error);
             }
         };
         loadSessions();
     }, []);
 
-    // Format the date from ISO string to a readable format
     const formatDate = (isoString: string) => {
         const date = new Date(isoString);
         return date.toLocaleString();

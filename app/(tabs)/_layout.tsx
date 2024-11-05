@@ -1,48 +1,71 @@
-import { Tabs } from 'expo-router';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import React from 'react';
+import { Stack, Link } from 'expo-router';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function TabLayout() {
-    return (
-        <Tabs
-            screenOptions={{
-                tabBarActiveTintColor: '#148F77',
-                headerStyle: {
-                    backgroundColor: '#25292e',
-                },
-                headerShadowVisible: false,
-                headerTintColor: '#fff',
-                tabBarStyle: {
-                    backgroundColor: '#0D0D0D'
-                }
-            }}
-        >
-            <Tabs.Screen
-                name="index"
-                options={{
-                    title: 'Home',
-                    tabBarIcon: ({ color, focused }) => (
-                        <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={24} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="about"
-                options={{
-                    title: 'About',
-                    tabBarIcon: ({ color, focused }) => (
-                        <Ionicons name={focused ? 'information-circle' : 'information-circle-outline'} color={color} size={24} />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="log" // Adding the log screen to the navigation
-                options={{
-                    title: 'Log',
-                    tabBarIcon: ({ color, focused }) => (
-                        <Ionicons name={focused ? 'document-text' : 'document-outline'} color={color} size={24} />
-                    ),
-                }}
-            />
-        </Tabs>
-    );
+  return (
+    <View style={styles.container}>
+      {/* Render the current tab page */}
+      <Stack />
+        
+      {/* Static Tab Bar at the Bottom */}
+      <View style={styles.tabBar}>
+        <Link href="./index" asChild>
+          <TouchableOpacity style={styles.tabItem}>
+            <MaterialIcons name="home" size={24} color="#148F77" />
+            <Text style={styles.tabText}>Home</Text>
+          </TouchableOpacity>
+        </Link>
+
+        <Link href="./about" asChild>
+          <TouchableOpacity style={styles.tabItem}>
+            <MaterialIcons name="info" size={24} color="#fff" />
+            <Text style={styles.tabText}>About</Text>
+          </TouchableOpacity>
+        </Link>
+
+        <Link href="./log" asChild>
+          <TouchableOpacity style={styles.tabItem}>
+            <MaterialIcons name="list" size={24} color="#fff" />
+            <Text style={styles.tabText}>Log</Text>
+          </TouchableOpacity>
+        </Link>
+
+        <Link href="./graph" asChild>
+          <TouchableOpacity style={styles.tabItem}>
+            <MaterialIcons name="bar-chart" size={24} color="#fff" />
+            <Text style={styles.tabText}>Graph</Text>
+          </TouchableOpacity>
+        </Link>
+      </View>
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  tabBar: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    height: 60,
+    backgroundColor: '#333',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#333',
+  },
+  tabItem: {
+    alignItems: 'center',
+  },
+  tabText: {
+    color: '#fff',
+    fontSize: 12,
+    marginTop: 4,
+  },
+});

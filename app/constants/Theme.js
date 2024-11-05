@@ -1,5 +1,5 @@
 // src/styles/theme.js
-
+/*
 const colors = {
     light: {
       background: '#F0F9E8', // Light greenish beige
@@ -45,3 +45,4 @@ const colors = {
     spacing,
     typography,
   };
+  */

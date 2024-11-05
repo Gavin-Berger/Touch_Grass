@@ -3,6 +3,8 @@
  * Designed for both light and dark modes with earthy, calming tones.
  */
 
+
+/*
 const tintColorLight = '#6BBF59'; // Grass green
 const tintColorDark = '#FFD700'; // Sunshine yellow for dark mode highlight
 
@@ -28,3 +30,4 @@ export const Colors = {
     accent: '#FFA351',         // Warm orange accent in dark mode
   },
 };
+*/

@@ -21,7 +21,7 @@ const App: React.FC = () => {
     const inactivityThreshold = 1000;
     let lastStepTime = 0;
     const timeBuffer = 1000;
-    const lowPassFactor = 0.1;
+    const lowPassFactor = 1;
 
     let smoothedData = { x: 0, y: 0, z: 0 };
     let isStopped = false;
@@ -92,7 +92,7 @@ const App: React.FC = () => {
         //Logic to detect extra steps using accelerometer
         const detectExtraStep = (data: { x: number; y: number; z: number }) => {
             const currentTime = Date.now();
-            const stepThreshold = 25;
+            const stepThreshold = 44;
 
             smoothedData = {
                 x: smoothedData.x + lowPassFactor * (data.x - smoothedData.x),
@@ -161,12 +161,14 @@ const App: React.FC = () => {
 
     const handlePause = () => {
         setIsPaused(true);
+        setIsCounting(false);
     };
 
     const handleStop = () => {
         setSessionLog([...sessionLog, steps]);
         setIsCounting(false);
         setSteps(0);
+        setManualSteps(0);
         setStartTimestamp(null);
         setSeconds(0);
         setMinutes(0);

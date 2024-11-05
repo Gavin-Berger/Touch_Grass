@@ -48,17 +48,16 @@ export default function Index() {
 
       {/* Buttons Linking to Different Sections */}
       <View style={styles.buttonContainer}>
-        <Link href="./graph" asChild>
-          <TouchableOpacity style={styles.button}>
-            <MaterialIcons name="bar-chart" size={24} color="#fff" />
-            <Text style={styles.buttonText}>Graph</Text>
-          </TouchableOpacity>
-        </Link>
-
         <Link href="./log" asChild>
           <TouchableOpacity style={styles.button}>
             <MaterialIcons name="list" size={24} color="#fff" />
             <Text style={styles.buttonText}>Log</Text>
+          </TouchableOpacity>
+        </Link>
+        <Link href="./graph" asChild>
+          <TouchableOpacity style={styles.button}>
+            <MaterialIcons name="bar-chart" size={24} color="#fff" />
+            <Text style={styles.buttonText}>Graph</Text>
           </TouchableOpacity>
         </Link>
 

@@ -17,25 +17,23 @@ export default function TabLayout() {
             <Text style={styles.tabText}>Home</Text>
           </TouchableOpacity>
         </Link>
-
-        <Link href="./about" asChild>
-          <TouchableOpacity style={styles.tabItem}>
-            <MaterialIcons name="info" size={24} color="#fff" />
-            <Text style={styles.tabText}>About</Text>
-          </TouchableOpacity>
-        </Link>
-
         <Link href="./log" asChild>
           <TouchableOpacity style={styles.tabItem}>
             <MaterialIcons name="list" size={24} color="#fff" />
             <Text style={styles.tabText}>Log</Text>
           </TouchableOpacity>
         </Link>
-
+       
         <Link href="./graph" asChild>
           <TouchableOpacity style={styles.tabItem}>
             <MaterialIcons name="bar-chart" size={24} color="#fff" />
             <Text style={styles.tabText}>Graph</Text>
+          </TouchableOpacity>
+        </Link>
+        <Link href="./about" asChild>
+          <TouchableOpacity style={styles.tabItem}>
+            <MaterialIcons name="info" size={24} color="#fff" />
+            <Text style={styles.tabText}>About</Text>
           </TouchableOpacity>
         </Link>
       </View>

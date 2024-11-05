@@ -2,7 +2,6 @@ import React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Animated } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
-import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Circle } from 'react-native-svg';
 
 export default function Index() {
@@ -58,6 +57,14 @@ export default function Index() {
           <TouchableOpacity style={styles.button}>
             <MaterialIcons name="bar-chart" size={24} color="#fff" />
             <Text style={styles.buttonText}>Graph</Text>
+          </TouchableOpacity>
+        </Link>
+
+        {/* Added Set Goal button for goal setting feature */}
+        <Link href="./SetGoal" asChild>
+          <TouchableOpacity style={styles.button}>
+            <MaterialIcons name="flag" size={24} color="#fff" />
+            <Text style={styles.buttonText}>Set Goal</Text>
           </TouchableOpacity>
         </Link>
 
@@ -156,3 +163,4 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
+

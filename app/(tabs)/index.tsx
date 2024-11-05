@@ -68,13 +68,6 @@ export default function Index() {
             <Text style={styles.buttonText}>About</Text>
           </TouchableOpacity>
         </Link>
-
-        <Link href="./index" asChild>
-          <TouchableOpacity style={styles.button}>
-            <MaterialIcons name="home" size={24} color="#fff" />
-            <Text style={styles.buttonText}>Home</Text>
-          </TouchableOpacity>
-        </Link>
       </View>
 
       {/* Static Tab Bar at the Bottom */}

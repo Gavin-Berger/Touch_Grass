@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Platform, TouchableOpacity, Button } from 'reac
 import { Pedometer, Accelerometer } from 'expo-sensors';
 import { useRouter } from 'expo-router';
 import * as Location from 'expo-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App: React.FC = () => {
     const [steps, setSteps] = useState<number>(0);
@@ -137,15 +138,32 @@ const App: React.FC = () => {
         setIsPaused(true);
     };
 
-    const handleStop = () => {
-        setSessionLog([...sessionLog, steps]);
+    const handleStop = async () => {
+        const sessionData = {
+            steps: steps, // Total steps recorded
+            duration: `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`,
+            timestamp: new Date().toISOString(),
+        };
+    
+        // Retrieve existing sessions from AsyncStorage
+        try {
+            const savedSessions = await AsyncStorage.getItem('sessions');
+            const sessions = savedSessions ? JSON.parse(savedSessions) : [];
+            sessions.push(sessionData);
+    
+            // Save updated sessions back to AsyncStorage
+            await AsyncStorage.setItem('sessions', JSON.stringify(sessions));
+        } catch (error) {
+            console.error("Error saving session:", error);
+        }
+    
         setIsCounting(false);
         setSteps(0);
         setStartTimestamp(null);
         setSeconds(0);
         setMinutes(0);
         setHours(0);
-        router.push('/');
+        router.push('/'); // Navigate back to the home page
     };
 
     return (

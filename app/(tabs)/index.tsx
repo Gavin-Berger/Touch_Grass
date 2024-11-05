@@ -61,7 +61,7 @@ export default function Index() {
         </Link>
 
         {/* Added Set Goal button for goal setting feature */}
-        <Link href="./SetGoal" asChild>
+        <Link href="/set-goal" asChild> {/* Ensure the path matches the actual filename exactly */}
           <TouchableOpacity style={styles.button}>
             <MaterialIcons name="flag" size={24} color="#fff" />
             <Text style={styles.buttonText}>Set Goal</Text>

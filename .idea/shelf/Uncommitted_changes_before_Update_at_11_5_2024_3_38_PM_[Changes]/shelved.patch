@@ -1,0 +1,190 @@
+Index: app/(tabs)/index.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\r\nimport { Text, View, StyleSheet, TouchableOpacity, Animated } from \"react-native\";\r\nimport { MaterialIcons } from '@expo/vector-icons';\r\nimport { Link } from 'expo-router';\r\nimport { LinearGradient } from 'expo-linear-gradient';\r\nimport Svg, { Circle } from 'react-native-svg';\r\n\r\nexport default function Index() {\r\n  const scaleAnim = React.useRef(new Animated.Value(1)).current;\r\n\r\n  // Jungle-like animation effect\r\n  React.useEffect(() => {\r\n    Animated.loop(\r\n      Animated.sequence([\r\n        Animated.timing(scaleAnim, {\r\n          toValue: 1.05,\r\n          duration: 3000,\r\n          useNativeDriver: true,\r\n        }),\r\n        Animated.timing(scaleAnim, {\r\n          toValue: 1,\r\n          duration: 3000,\r\n          useNativeDriver: true,\r\n        }),\r\n      ])\r\n    ).start();\r\n  }, []);\r\n\r\n  return (\r\n    <View style={styles.container}>\r\n      {/* Background Jungle Layers */}\r\n      <Svg height=\"100%\" width=\"100%\" style={styles.svgContainer}>\r\n        <Circle cx=\"20%\" cy=\"30%\" r=\"150\" fill=\"rgba(34, 139, 34, 0.3)\" />\r\n        <Circle cx=\"80%\" cy=\"40%\" r=\"120\" fill=\"rgba(0, 128, 0, 0.2)\" />\r\n        <Circle cx=\"50%\" cy=\"80%\" r=\"180\" fill=\"rgba(34, 139, 34, 0.2)\" />\r\n        <Circle cx=\"30%\" cy=\"60%\" r=\"90\" fill=\"rgba(85, 107, 47, 0.25)\" />\r\n      </Svg>\r\n\r\n      {/* Centered \"Touch Grass\" Text with Animated Icon */}\r\n      <Link href=\"./run\" asChild>\r\n        <TouchableOpacity style={styles.centeredContainer}>\r\n          <Text style={styles.text}>Touch Grass</Text>\r\n          <Animated.View style={[styles.iconContainer, { transform: [{ scale: scaleAnim }] }]}>\r\n            <MaterialIcons name=\"grass\" size={240} color=\"#fff\" />\r\n          </Animated.View>\r\n        </TouchableOpacity>\r\n      </Link>\r\n\r\n      {/* Buttons Linking to Different Sections */}\r\n      <View style={styles.buttonContainer}>\r\n        <Link href=\"./graph\" asChild>\r\n          <TouchableOpacity style={styles.button}>\r\n            <MaterialIcons name=\"bar-chart\" size={24} color=\"#fff\" />\r\n            <Text style={styles.buttonText}>Graph</Text>\r\n          </TouchableOpacity>\r\n        </Link>\r\n\r\n        <Link href=\"./log\" asChild>\r\n          <TouchableOpacity style={styles.button}>\r\n            <MaterialIcons name=\"list\" size={24} color=\"#fff\" />\r\n            <Text style={styles.buttonText}>Log</Text>\r\n          </TouchableOpacity>\r\n        </Link>\r\n\r\n        <Link href=\"./about\" asChild>\r\n          <TouchableOpacity style={styles.button}>\r\n            <MaterialIcons name=\"info\" size={24} color=\"#fff\" />\r\n            <Text style={styles.buttonText}>About</Text>\r\n          </TouchableOpacity>\r\n        </Link>\r\n      </View>\r\n\r\n      {/* Static Tab Bar at the Bottom */}\r\n      <View style={styles.tabBar}>\r\n        <TouchableOpacity style={styles.tabItem}>\r\n          <MaterialIcons name=\"home\" size={24} color=\"#148F77\" />\r\n          <Text style={styles.tabText}>Home</Text>\r\n        </TouchableOpacity>\r\n        <TouchableOpacity style={styles.tabItem}>\r\n          <MaterialIcons name=\"search\" size={24} color=\"#fff\" />\r\n          <Text style={styles.tabText}>Log</Text>\r\n        </TouchableOpacity>\r\n        <TouchableOpacity style={styles.tabItem}>\r\n          <MaterialIcons name=\"settings\" size={24} color=\"#fff\" />\r\n          <Text style={styles.tabText}>Settings</Text>\r\n        </TouchableOpacity>\r\n      </View>\r\n    </View>\r\n  );\r\n}\r\n\r\nconst styles = StyleSheet.create({\r\n  container: {\r\n    flex: 1,\r\n    backgroundColor: '#1A3C40',\r\n    alignItems: 'center',\r\n    justifyContent: 'center',\r\n    position: 'relative',\r\n    overflow: 'hidden',\r\n  },\r\n  svgContainer: {\r\n    position: 'absolute',\r\n    top: 0,\r\n    left: 0,\r\n    zIndex: -1,\r\n  },\r\n  centeredContainer: {\r\n    alignItems: 'center',\r\n    justifyContent: 'center',\r\n    marginTop: 50,\r\n  },\r\n  text: {\r\n    color: '#D4EDDA',\r\n    fontSize: 36,\r\n    fontWeight: 'bold',\r\n    textAlign: 'center',\r\n    marginBottom: 20,\r\n  },\r\n  iconContainer: {\r\n    marginVertical: 20,\r\n  },\r\n  buttonContainer: {\r\n    width: '80%',\r\n    marginBottom: 100,\r\n  },\r\n  button: {\r\n    flexDirection: 'row',\r\n    alignItems: 'center',\r\n    backgroundColor: '#148F77',\r\n    padding: 15,\r\n    borderRadius: 8,\r\n    marginVertical: 10,\r\n  },\r\n  buttonText: {\r\n    color: '#fff',\r\n    fontSize: 18,\r\n    marginLeft: 10,\r\n  },\r\n  tabBar: {\r\n    position: 'absolute',\r\n    bottom: 0,\r\n    width: '100%',\r\n    height: 60,\r\n    backgroundColor: '#0D0D0D',\r\n    flexDirection: 'row',\r\n    justifyContent: 'space-around',\r\n    alignItems: 'center',\r\n    borderTopWidth: 1,\r\n    borderTopColor: '#333',\r\n  },\r\n  tabItem: {\r\n    alignItems: 'center',\r\n  },\r\n  tabText: {\r\n    color: '#fff',\r\n    fontSize: 12,\r\n    marginTop: 4,\r\n  },\r\n});\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/(tabs)/index.tsx b/app/(tabs)/index.tsx
+--- a/app/(tabs)/index.tsx	(revision c58cb39d3065d006fac5c35450b7f7776e3e129a)
++++ b/app/(tabs)/index.tsx	(date 1730837695388)
+@@ -2,7 +2,6 @@
+ import { Text, View, StyleSheet, TouchableOpacity, Animated } from "react-native";
+ import { MaterialIcons } from '@expo/vector-icons';
+ import { Link } from 'expo-router';
+-import { LinearGradient } from 'expo-linear-gradient';
+ import Svg, { Circle } from 'react-native-svg';
+ 
+ export default function Index() {
+@@ -61,6 +60,14 @@
+             <Text style={styles.buttonText}>Log</Text>
+           </TouchableOpacity>
+         </Link>
++
++        {/* Added Set Goal button for goal setting feature */}
++        <Link href="./SetGoal" asChild>
++          <TouchableOpacity style={styles.button}>
++            <MaterialIcons name="flag" size={24} color="#fff" />
++            <Text style={styles.buttonText}>Set Goal</Text>
++          </TouchableOpacity>
++        </Link>
+ 
+         <Link href="./about" asChild>
+           <TouchableOpacity style={styles.button}>
+@@ -157,3 +164,4 @@
+     marginTop: 4,
+   },
+ });
++
+Index: app/(tabs)/set-goal.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/(tabs)/set-goal.tsx b/app/(tabs)/set-goal.tsx
+new file mode 100644
+--- /dev/null	(date 1730838220195)
++++ b/app/(tabs)/set-goal.tsx	(date 1730838220195)
+@@ -0,0 +1,110 @@
++import React, { useState, useEffect } from 'react';
++import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
++import AsyncStorage from '@react-native-async-storage/async-storage';
++
++const SetGoal: React.FC = () => {
++    const [goalSteps, setGoalSteps] = useState('');
++    const [timeFrame, setTimeFrame] = useState(''); // Options like "daily", "weekly", "monthly"
++    const [progress, setProgress] = useState<number>(0);
++
++    // Load the progress based on session logs and selected time frame
++    useEffect(() => {
++        const calculateProgress = async () => {
++            const savedSessions = await AsyncStorage.getItem('sessions');
++            if (savedSessions) {
++                const sessions = JSON.parse(savedSessions);
++                const now = new Date();
++                const goalEndDate = new Date();
++
++                if (timeFrame === 'daily') goalEndDate.setDate(now.getDate() - 1);
++                else if (timeFrame === 'weekly') goalEndDate.setDate(now.getDate() - 7);
++                else if (timeFrame === 'monthly') goalEndDate.setMonth(now.getMonth() - 1);
++
++                // Sum steps within the specified timeframe
++                const stepsInTimeFrame = sessions.reduce((total: number, session: any) => {
++                    const sessionDate = new Date(session.timestamp);
++                    if (sessionDate >= goalEndDate) {
++                        return total + session.steps;
++                    }
++                    return total;
++                }, 0);
++
++                setProgress(stepsInTimeFrame);
++            }
++        };
++        calculateProgress();
++    }, [timeFrame]);
++
++    // Save the goal to AsyncStorage for persistence
++    const handleSaveGoal = async () => {
++        const goalData = { steps: parseInt(goalSteps), timeFrame };
++        await AsyncStorage.setItem('goal', JSON.stringify(goalData));
++        alert('Goal saved successfully!');
++    };
++
++    return (
++        <View style={styles.container}>
++            <Text style={styles.heading}>Set a Step Goal</Text>
++            <TextInput
++                style={styles.input}
++                placeholder="Enter step goal"
++                keyboardType="numeric"
++                value={goalSteps}
++                onChangeText={setGoalSteps}
++            />
++            <TextInput
++                style={styles.input}
++                placeholder="Time frame (daily, weekly, monthly)"
++                value={timeFrame}
++                onChangeText={setTimeFrame}
++            />
++            <TouchableOpacity style={styles.button} onPress={handleSaveGoal}>
++                <Text style={styles.buttonText}>Save Goal</Text>
++            </TouchableOpacity>
++            <Text style={styles.progressText}>
++                Progress: {progress} / {goalSteps} steps
++            </Text>
++        </View>
++    );
++};
++
++const styles = StyleSheet.create({
++    container: {
++        flex: 1,
++        backgroundColor: '#0D0D0D',
++        padding: 20,
++        alignItems: 'center',
++        justifyContent: 'center',
++    },
++    heading: {
++        fontSize: 24,
++        color: '#D4EDDA',
++        marginBottom: 20,
++    },
++    input: {
++        width: '80%',
++        padding: 10,
++        backgroundColor: '#232323',
++        color: '#fff',
++        borderRadius: 8,
++        marginBottom: 10,
++    },
++    button: {
++        backgroundColor: '#148F77',
++        paddingVertical: 10,
++        paddingHorizontal: 20,
++        borderRadius: 8,
++        marginBottom: 20,
++    },
++    buttonText: {
++        color: '#fff',
++        fontSize: 18,
++    },
++    progressText: {
++        color: '#D4EDDA',
++        fontSize: 18,
++        marginTop: 20,
++    },
++});
++
++export default SetGoal;
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"NONE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"9f95afb3-4c80-4b89-a352-ff348bef94ec\" name=\"Changes\" comment=\"merging with Timer-Integration\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ClangdSettings\">\r\n    <option name=\"formatViaClangd\" value=\"false\" />\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"TimerScreen\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Gershom45&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Gavin-Berger/Touch_Grass.git&quot;,\r\n    &quot;accountId&quot;: &quot;d1b33347-6704-4f73-9cda-f7695f9f2f40&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;customColor&quot;: &quot;&quot;,\r\n  &quot;associatedIndex&quot;: 8\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2oMnqYbDOgRDMcvLZDJ0OYOMySK\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n    <option name=\"sortKey\" value=\"BY_TIME_DESCENDING\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,\r\n    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,\r\n    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,\r\n    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,\r\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\r\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\r\n    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;\r\n  }\r\n}</component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task id=\"LOCAL-00001\" summary=\"Adding the timer to the run function\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730143752987</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730143752987</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Adding the timer to the run function\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730143761244</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730143761244</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Adding the timer to the run function\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730145759330</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730145759330</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Adding the timer to the run function\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730146345009</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730146345009</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Adding empty page for the log function\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730308586669</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730308586669</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Simplify the naming conventions for creator/user benefit\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730308730619</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730308730619</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Simplify the naming conventions for creator/user benefit\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730318846907</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730318846907</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Simplify the naming conventions for creator/user benefit\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730319230180</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730319230180</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"Merge with main branch\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730319640544</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730319640544</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Merge with main branch\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730320453881</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730320453881</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"merging with main\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730475350442</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730475350442</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730476143946</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730476143946</updated>\r\n    </task>\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"9f95afb3-4c80-4b89-a352-ff348bef94ec\" name=\"Changes\" comment=\"Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)\" />\r\n      <created>1730688506341</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1730688506341</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730689016684</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730689016684</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"merging with Timer-Integration\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730689578242</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730689578242</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"merging with Timer-Integration\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1730757546819</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1730757546819</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"16\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Adding the timer to the run function\" />\r\n    <MESSAGE value=\"Adding empty page for the log function\" />\r\n    <MESSAGE value=\"Simplify the naming conventions for creator/user benefit\" />\r\n    <MESSAGE value=\"Merge with main branch\" />\r\n    <MESSAGE value=\"merging with main\" />\r\n    <MESSAGE value=\"Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)\" />\r\n    <MESSAGE value=\"merging with Timer-Integration\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"merging with Timer-Integration\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision c58cb39d3065d006fac5c35450b7f7776e3e129a)
++++ b/.idea/workspace.xml	(date 1730839084825)
+@@ -4,7 +4,11 @@
+     <option name="autoReloadType" value="NONE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="merging with Timer-Integration" />
++    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="uncommented">
++      <change afterPath="$PROJECT_DIR$/app/(tabs)/set-goal.tsx" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -16,7 +20,7 @@
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="TimerScreen" />
++        <entry key="$PROJECT_DIR$" value="main" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />

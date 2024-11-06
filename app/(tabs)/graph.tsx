@@ -1,48 +1,76 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LineChart } from 'react-native-chart-kit';
+import { useIsFocused } from '@react-navigation/native';
+
+const screenWidth = Dimensions.get('window').width;
 
 export default function Graph() {
+  const [sessions, setSessions] = useState<{ steps: number; duration: string; timestamp: string }[]>([]);
+  const isFocused = useIsFocused(); // Check if the screen is focused
+
+  useEffect(() => {
+    const loadSessions = async () => {
+      try {
+        const savedSessions = await AsyncStorage.getItem('sessions');
+        if (savedSessions) {
+          setSessions(JSON.parse(savedSessions));
+        }
+      } catch (error) {
+        console.error("Failed to load sessions:", error);
+      }
+    };
+
+    if (isFocused) {
+      loadSessions();
+    }
+  }, [isFocused]); // Re-run this effect when the screen gains focus
+
+  const stepData = sessions.map(session => session.steps);
+  const labels = sessions.map(session => new Date(session.timestamp).toLocaleDateString());
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Progress Over Time</Text>
-      <LineChart
-        data={{
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-          datasets: [
-            {
-              data: [20, 45, 28, 80, 99, 43],
-            },
-          ],
-        }}
-        width={Dimensions.get('window').width - 40} // from react-native
-        height={220}
-        yAxisLabel=""
-        chartConfig={{
-          backgroundColor: '#1A3C40',
-          backgroundGradientFrom: '#1A3C40',
-          backgroundGradientTo: '#148F77',
-          decimalPlaces: 0,
-          color: (opacity = 1) => `rgba(212, 237, 218, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(212, 237, 218, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-          propsForDots: {
-            r: '6',
-            strokeWidth: '2',
-            stroke: '#0D0D0D',
-          },
-        }}
-        bezier
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
+      <Text style={styles.heading}>Steps Over Time</Text>
+      {stepData.length > 0 ? (
+        <LineChart
+          data={{
+            labels: labels,
+            datasets: [
+              {
+                data: stepData,
+              },
+            ],
+          }}
+          width={screenWidth - 32}
+          height={220}
+          chartConfig={chartConfig}
+          style={styles.chartStyle}
+        />
+      ) : (
+        <Text style={styles.emptyText}>No data available</Text>
+      )}
     </View>
   );
 }
+
+const chartConfig = {
+  backgroundColor: '#1A3C40',
+  backgroundGradientFrom: '#1A3C40',
+  backgroundGradientTo: '#148F77',
+  decimalPlaces: 0,
+  color: (opacity = 1) => `rgba(212, 237, 218, ${opacity})`,
+  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+  style: {
+    borderRadius: 8,
+  },
+  propsForDots: {
+    r: '5',
+    strokeWidth: '2',
+    stroke: '#FCAE1E',
+  },
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -50,12 +78,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#1A3C40',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 16,
   },
-  title: {
-    color: '#D4EDDA',
+  heading: {
     fontSize: 24,
+    color: '#D4EDDA',
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  chartStyle: {
+    borderRadius: 8,
+    marginVertical: 8,
+  },
+  emptyText: {
+    color: '#D4EDDA',
+    fontSize: 18,
+    marginTop: 20,
+    textAlign: 'center',
   },
 });

@@ -61,32 +61,16 @@ export default function Index() {
         </Link>
 
         {/* Added Set Goal button for goal setting feature */}
-<<<<<<< HEAD
         <Link href="./set-goal" asChild>
-=======
-        <Link href="./set-goal" asChild> {/* Corrected path to use './set-goal' */}
->>>>>>> 10f236390cd4647e0522a8cf44290b4b5c9e5e72
           <TouchableOpacity style={styles.button}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}> {/* Wrap contents in a View */}
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <MaterialIcons name="flag" size={24} color="#fff" />
               <Text style={styles.buttonText}>Set Goal</Text>
             </View>
           </TouchableOpacity>
         </Link>
-
-<<<<<<< HEAD
       </View>
-=======
-
-        <Link href="./about" asChild>
-          <TouchableOpacity style={styles.button}>
-            <MaterialIcons name="info" size={24} color="#fff" />
-            <Text style={styles.buttonText}>About</Text>
-          </TouchableOpacity>
-        </Link>
->>>>>>> 10f236390cd4647e0522a8cf44290b4b5c9e5e72
-      </View>
-
+    </View> // Removed extra closing </View> tag here
   );
 }
 
@@ -158,4 +142,3 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 });
-

@@ -61,37 +61,16 @@ export default function Index() {
         </Link>
 
         {/* Added Set Goal button for goal setting feature */}
-        <Link href="/set-goal" asChild> {/* Ensure the path matches the actual filename exactly */}
+        <Link href="./set-goal" asChild>
           <TouchableOpacity style={styles.button}>
             <MaterialIcons name="flag" size={24} color="#fff" />
             <Text style={styles.buttonText}>Set Goal</Text>
           </TouchableOpacity>
         </Link>
 
-        <Link href="./about" asChild>
-          <TouchableOpacity style={styles.button}>
-            <MaterialIcons name="info" size={24} color="#fff" />
-            <Text style={styles.buttonText}>About</Text>
-          </TouchableOpacity>
-        </Link>
+      </View>
       </View>
 
-      {/* Static Tab Bar at the Bottom */}
-      <View style={styles.tabBar}>
-        <TouchableOpacity style={styles.tabItem}>
-          <MaterialIcons name="home" size={24} color="#148F77" />
-          <Text style={styles.tabText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
-          <MaterialIcons name="search" size={24} color="#fff" />
-          <Text style={styles.tabText}>Log</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.tabItem}>
-          <MaterialIcons name="settings" size={24} color="#fff" />
-          <Text style={styles.tabText}>Settings</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
   );
 }
 

@@ -7,8 +7,8 @@ export default function TabLayout() {
   return (
     <View style={styles.container}>
       {/* Render the current tab page */}
-      <Stack />
-        
+      <Stack screenOptions={{ headerShown: false }} />
+
       {/* Static Tab Bar at the Bottom */}
       <View style={styles.tabBar}>
         <Link href="./index" asChild>
@@ -23,7 +23,12 @@ export default function TabLayout() {
             <Text style={styles.tabText}>Log</Text>
           </TouchableOpacity>
         </Link>
-       
+        <Link href="./set-goal" asChild>
+          <TouchableOpacity style={styles.tabItem}>
+            <MaterialIcons name="flag" size={24} color="#fff" />
+            <Text style={styles.tabText}>Set Goal</Text>
+          </TouchableOpacity>
+        </Link>
         <Link href="./graph" asChild>
           <TouchableOpacity style={styles.tabItem}>
             <MaterialIcons name="bar-chart" size={24} color="#fff" />

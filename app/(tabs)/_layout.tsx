@@ -11,7 +11,7 @@ export default function TabLayout() {
 
       {/* Static Tab Bar at the Bottom */}
       <View style={styles.tabBar}>
-        <Link href="./index" asChild>
+        <Link href="./" asChild>
           <TouchableOpacity style={styles.tabItem}>
             <MaterialIcons name="home" size={24} color="#148F77" />
             <Text style={styles.tabText}>Home</Text>

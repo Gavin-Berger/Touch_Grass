@@ -61,12 +61,15 @@ export default function Index() {
         </Link>
 
         {/* Added Set Goal button for goal setting feature */}
-        <Link href="/set-goal" asChild> {/* Ensure the path matches the actual filename exactly */}
+        <Link href="./set-goal" asChild> {/* Corrected path to use './set-goal' */}
           <TouchableOpacity style={styles.button}>
-            <MaterialIcons name="flag" size={24} color="#fff" />
-            <Text style={styles.buttonText}>Set Goal</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}> {/* Wrap contents in a View */}
+              <MaterialIcons name="flag" size={24} color="#fff" />
+              <Text style={styles.buttonText}>Set Goal</Text>
+            </View>
           </TouchableOpacity>
         </Link>
+
 
         <Link href="./about" asChild>
           <TouchableOpacity style={styles.button}>

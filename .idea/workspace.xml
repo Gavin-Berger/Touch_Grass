@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="uncommented">
-      <change afterPath="$PROJECT_DIR$/app/(tabs)/set-goal.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="ensuring correct name with set-goal.tsx" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -189,7 +185,47 @@
       <option name="project" value="LOCAL" />
       <updated>1730757546819</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Adding set-goal, giving log  the ability to swipe to reveal delete button, adding set-goal button index.tsx">
+      <option name="closed" value="true" />
+      <created>1730839657915</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1730839657915</updated>
+    </task>
+    <task id="LOCAL-00017" summary="shelved.patch, Uncommitted_changes_before_Checkout_at_11_5_2024_2_51_PM__Changes_.xml">
+      <option name="closed" value="true" />
+      <created>1730839773567</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1730839773567</updated>
+    </task>
+    <task id="LOCAL-00018" summary="shelved.patch, Uncommitted_changes_before_Checkout_at_11_5_2024_2_51_PM__Changes_.xml">
+      <option name="closed" value="true" />
+      <created>1730840129352</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1730840129352</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Gesture handling with Rootlayout.js and deleting copy of run.tsx">
+      <option name="closed" value="true" />
+      <created>1730841378003</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1730841378003</updated>
+    </task>
+    <task id="LOCAL-00020" summary="ensuring correct name with set-goal.tsx">
+      <option name="closed" value="true" />
+      <created>1730844251522</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1730844251522</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -211,6 +247,10 @@
     <MESSAGE value="merging with main" />
     <MESSAGE value="Log: loads and  displays each session's steps, duration, and formatted timestamp&#10;Run.tsx:Added the timer that tracks hours minutes, and seconds.&#10;Added saves to session details like steps, duration, and timestamp to AsyncStorage when the stop button is pressed&#10;package.json: fixed typo of touchgrass to touch-grass (it was labeling as a type because it was referencing project name, not case sensitive however)" />
     <MESSAGE value="merging with Timer-Integration" />
-    <option name="LAST_COMMIT_MESSAGE" value="merging with Timer-Integration" />
+    <MESSAGE value="Adding set-goal, giving log  the ability to swipe to reveal delete button, adding set-goal button index.tsx" />
+    <MESSAGE value="shelved.patch, Uncommitted_changes_before_Checkout_at_11_5_2024_2_51_PM__Changes_.xml" />
+    <MESSAGE value="Gesture handling with Rootlayout.js and deleting copy of run.tsx" />
+    <MESSAGE value="ensuring correct name with set-goal.tsx" />
+    <option name="LAST_COMMIT_MESSAGE" value="ensuring correct name with set-goal.tsx" />
   </component>
 </project>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Swipeable } from 'react-native-gesture-handler';
 
 const Log: React.FC = () => {
     const [sessions, setSessions] = useState<{ steps: number; duration: string; timestamp: string }[]>([]);
@@ -51,16 +50,6 @@ const Log: React.FC = () => {
         );
     };
 
-    // Render the delete button when swiped
-    const renderRightActions = (index: number) => {
-        return (
-            <TouchableOpacity style={styles.deleteButton} onPress={() => deleteSession(index)}>
-                <MaterialIcons name="delete" size={24} color="#fff" />
-                <Text style={styles.deleteText}>Delete</Text>
-            </TouchableOpacity>
-        );
-    };
-
     return (
         <View style={styles.container}>
             <Text style={styles.heading}>Run Log</Text>
@@ -68,15 +57,16 @@ const Log: React.FC = () => {
                 data={sessions}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item, index }) => (
-                    <Swipeable renderRightActions={() => renderRightActions(index)}>
-                        <View style={styles.sessionItem}>
-                            <View style={styles.sessionInfo}>
-                                <Text style={styles.text}>Steps: {item.steps}</Text>
-                                <Text style={styles.text}>Duration: {item.duration}</Text>
-                                <Text style={styles.text}>Completed At: {formatDate(item.timestamp)}</Text>
-                            </View>
+                    <View style={styles.sessionItem}>
+                        <View style={styles.sessionInfo}>
+                            <Text style={styles.text}>Steps: {item.steps}</Text>
+                            <Text style={styles.text}>Duration: {item.duration}</Text>
+                            <Text style={styles.text}>Completed At: {formatDate(item.timestamp)}</Text>
                         </View>
-                    </Swipeable>
+                        <TouchableOpacity onPress={() => deleteSession(index)} style={styles.deleteButton}>
+                            <MaterialIcons name="delete" size={24} color="red" />
+                        </TouchableOpacity>
+                    </View>
                 )}
                 ListEmptyComponent={<Text style={styles.emptyText}>No logs available</Text>}
             />
@@ -102,6 +92,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         marginBottom: 10,
         flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
     },
     sessionInfo: {
@@ -118,17 +109,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     deleteButton: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 80,
-        backgroundColor: 'red',
-        borderRadius: 8,
-        marginBottom: 10,
-    },
-    deleteText: {
-        color: '#fff',
-        fontSize: 16,
-        marginTop: 4,
+        paddingHorizontal: 10,
     },
 });
 

@@ -8,14 +8,17 @@ const screenWidth = Dimensions.get('window').width;
 
 export default function Graph() {
   const [sessions, setSessions] = useState<{ steps: number; duration: string; timestamp: string }[]>([]);
-  const isFocused = useIsFocused(); // Check if the screen is focused
+  const [averageSteps, setAverageSteps] = useState<number | null>(null); // Track average steps
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const loadSessions = async () => {
       try {
         const savedSessions = await AsyncStorage.getItem('sessions');
         if (savedSessions) {
-          setSessions(JSON.parse(savedSessions));
+          const parsedSessions = JSON.parse(savedSessions);
+          setSessions(parsedSessions);
+          calculateAverageSteps(parsedSessions); // Calculate average steps on load
         }
       } catch (error) {
         console.error("Failed to load sessions:", error);
@@ -25,14 +28,26 @@ export default function Graph() {
     if (isFocused) {
       loadSessions();
     }
-  }, [isFocused]); // Re-run this effect when the screen gains focus
+  }, [isFocused]);
+
+  // Function to calculate the average steps
+  const calculateAverageSteps = (sessionsData: { steps: number; duration: string; timestamp: string }[]) => {
+    const totalSteps = sessionsData.reduce((sum, session) => sum + session.steps, 0);
+    const average = sessionsData.length > 0 ? totalSteps / sessionsData.length : 0;
+    setAverageSteps(Math.round(average));
+  };
 
   const stepData = sessions.map(session => session.steps);
-  const labels = sessions.map(session => new Date(session.timestamp).toLocaleDateString());
+  const labels = sessions
+    .map(session => new Date(session.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))
+    .filter((_, index) => index % 2 === 0);
 
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Steps Over Time</Text>
+      {averageSteps !== null && (
+        <Text style={styles.averageText}>Average Steps per Day: {averageSteps}</Text>
+      )}
       {stepData.length > 0 ? (
         <LineChart
           data={{
@@ -87,6 +102,12 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: 'center',
   },
+  averageText: {
+    fontSize: 18,
+    color: '#FCAE1E',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
   chartStyle: {
     borderRadius: 8,
     marginVertical: 8,
@@ -98,3 +119,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+

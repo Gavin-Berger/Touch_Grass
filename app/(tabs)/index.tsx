@@ -47,12 +47,15 @@ export default function Index() {
 
       {/* Buttons Linking to Different Sections */}
       <View style={styles.buttonContainer}>
+        {/* Log Button */}
         <Link href="./log" asChild>
           <TouchableOpacity style={styles.button}>
             <MaterialIcons name="list" size={24} color="#fff" />
             <Text style={styles.buttonText}>Log</Text>
           </TouchableOpacity>
         </Link>
+
+        {/* Graph Button */}
         <Link href="./graph" asChild>
           <TouchableOpacity style={styles.button}>
             <MaterialIcons name="bar-chart" size={24} color="#fff" />
@@ -60,17 +63,24 @@ export default function Index() {
           </TouchableOpacity>
         </Link>
 
-        {/* Added Set Goal button for goal setting feature */}
+        {/* Set Goal Button */}
         <Link href="./set-goal" asChild>
           <TouchableOpacity style={styles.button}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <MaterialIcons name="flag" size={24} color="#fff" />
-              <Text style={styles.buttonText}>Set Goal</Text>
-            </View>
+            <MaterialIcons name="flag" size={24} color="#fff" />
+            <Text style={styles.buttonText}>Set Goal</Text>
+          </TouchableOpacity>
+        </Link>
+
+        {/* Achievements Button */}
+        {/* This button links to the Achievements page and uses a trophy icon */}
+        <Link href="./achievements" asChild>
+          <TouchableOpacity style={styles.button}>
+            <MaterialIcons name="emoji-events" size={24} color="#fff" />
+            <Text style={styles.buttonText}>Achievements</Text>
           </TouchableOpacity>
         </Link>
       </View>
-    </View> // Removed extra closing </View> tag here
+    </View>
   );
 }
 

@@ -46,7 +46,7 @@ export default function Graph() {
     <View style={styles.container}>
       <Text style={styles.heading}>Steps Over Time</Text>
       {averageSteps !== null && (
-        <Text style={styles.averageText}>Average Steps per Day: {averageSteps}</Text>
+        <Text style={styles.averageText}>Average Steps Per Session: {averageSteps}</Text>
       )}
       {stepData.length > 0 ? (
         <LineChart

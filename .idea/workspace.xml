@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="ensuring correct name with set-goal.tsx" />
+    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Updated graph.tsx line 49 text to be per session rather than per day.&#10;&#10;created button for Achievements page&#10;&#10;Updating the splash.png, and icon.png to TouchGrass1.png&#10;&#10;Created and inserted the achievements.tsx&#10;&#10;added the TouchGrass1.png to app.json">
+      <change afterPath="$PROJECT_DIR$/app/(tabs)/achievements.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/TouchGrass1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/graph.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/graph.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,6 +42,9 @@
     &quot;accountId&quot;: &quot;d1b33347-6704-4f73-9cda-f7695f9f2f40&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 8
@@ -56,6 +68,11 @@
     &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\treyg\Touch_Grass\Touch_Grass\Touch_Grass\assets\images" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="Adding the timer to the run function">
@@ -225,7 +242,31 @@
       <option name="project" value="LOCAL" />
       <updated>1730844251522</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="ensuring correct link name, wrapping the two children elements for ./set-goal.">
+      <option name="closed" value="true" />
+      <created>1730860817873</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1730860817873</updated>
+    </task>
+    <task id="LOCAL-00022" summary="ensuring correct link name, wrapping the two children elements for ./set-goal.">
+      <option name="closed" value="true" />
+      <created>1730860836863</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1730860836863</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Replaced swipe-to-delete functionality with a delete button beside each session entry, including a confirmation prompt. This change simplifies session management and avoids potential compatibility issues with gesture handling in React Native v1.0.0, ensuring more consistent performance.">
+      <option name="closed" value="true" />
+      <created>1730863600395</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1730863600395</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -251,6 +292,9 @@
     <MESSAGE value="shelved.patch, Uncommitted_changes_before_Checkout_at_11_5_2024_2_51_PM__Changes_.xml" />
     <MESSAGE value="Gesture handling with Rootlayout.js and deleting copy of run.tsx" />
     <MESSAGE value="ensuring correct name with set-goal.tsx" />
-    <option name="LAST_COMMIT_MESSAGE" value="ensuring correct name with set-goal.tsx" />
+    <MESSAGE value="ensuring correct link name, wrapping the two children elements for ./set-goal." />
+    <MESSAGE value="Replaced swipe-to-delete functionality with a delete button beside each session entry, including a confirmation prompt. This change simplifies session management and avoids potential compatibility issues with gesture handling in React Native v1.0.0, ensuring more consistent performance." />
+    <MESSAGE value="Updated graph.tsx line 49 text to be per session rather than per day.&#10;&#10;created button for Achievements page&#10;&#10;Updating the splash.png, and icon.png to TouchGrass1.png&#10;&#10;Created and inserted the achievements.tsx&#10;&#10;added the TouchGrass1.png to app.json" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated graph.tsx line 49 text to be per session rather than per day.&#10;&#10;created button for Achievements page&#10;&#10;Updating the splash.png, and icon.png to TouchGrass1.png&#10;&#10;Created and inserted the achievements.tsx&#10;&#10;added the TouchGrass1.png to app.json" />
   </component>
 </project>

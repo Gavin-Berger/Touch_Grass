@@ -13,7 +13,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.touchgrass",
+      "infoPlist": {
+        "NSUserTrackingUsageDescription": "This identifier will be used to enable personalized ads to better suit your interests."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -24,8 +28,10 @@
         "ACCESS_FINE_LOCATION",
         "ACCESS_COARSE_LOCATION",
         "ACCESS_BACKGROUND_LOCATION",
-        "ACTIVITY_RECOGNITION"
-      ]
+        "ACTIVITY_RECOGNITION",
+        "VIBRATE"
+      ],
+      "useNextNotificationsApi": true
     },
     "web": {
       "bundler": "metro",
@@ -33,7 +39,14 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification-icon.png",
+          "color": "#ffffff"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

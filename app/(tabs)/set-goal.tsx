@@ -54,7 +54,7 @@ const SetGoal: React.FC = () => {
         calculateProgress(timeFrame);
     }, [timeFrame]);
 
-    // Save the goal to AsyncStorage
+    // Save the goal to AsyncStorage and update achievements
     const handleSaveGoal = async () => {
         if (isNaN(parseInt(goalSteps))) {
             alert('Please enter a valid numeric goal.');
@@ -65,6 +65,15 @@ const SetGoal: React.FC = () => {
             await AsyncStorage.setItem('goal', JSON.stringify(goalData));
             alert('Goal saved successfully!');
             calculateProgress(timeFrame); // Update progress after saving
+
+            // Update achievements for "Start of a Journey"
+            const storedAchievements = await AsyncStorage.getItem('completedAchievements');
+            const achievements = storedAchievements ? JSON.parse(storedAchievements) : [];
+            if (!achievements.includes('2')) { // '2' is the ID for the "Start of a Journey" achievement
+                achievements.push('2');
+                await AsyncStorage.setItem('completedAchievements', JSON.stringify(achievements));
+                alert('Achievement Unlocked: Start of a Journey');
+            }
         } catch (error) {
             console.error("Failed to save goal:", error);
         }
@@ -72,7 +81,7 @@ const SetGoal: React.FC = () => {
     };
 
     return (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}> 
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.container}>
                 <Text style={styles.heading}>Set a Step Goal</Text>
                 <TextInput

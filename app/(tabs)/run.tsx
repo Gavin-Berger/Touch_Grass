@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Platform, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, Platform, TouchableOpacity } from 'react-native';
 import { Pedometer, Accelerometer } from 'expo-sensors';
 import { useRouter } from 'expo-router';
 import * as Location from 'expo-location';
@@ -16,7 +16,7 @@ const App: React.FC = () => {
     const [minutes, setMinutes] = useState<number>(0);
     const [hours, setHours] = useState<number>(0);
     const router = useRouter();
-    const [accelerometerData, setAccelerometerData] = useState({ x: 0, y: 0, z: 0});
+    const [accelerometerData, setAccelerometerData] = useState({ x: 0, y: 0, z: 0 });
     const [manualSteps, setManualSteps] = useState<number>(0);
     const [pedometerSubscription, setPedometerSubscription] = useState<any>(null);
 
@@ -28,7 +28,7 @@ const App: React.FC = () => {
         let pedometerSubscription: any = null;
         let accelerometerSubscription: any = null;
 
-        //Making sure that device app is loaded on has a pedometer
+        // Making sure that device app is loaded on has a pedometer
         const checkPedometerAvailability = async () => {
             const isAvailable = await Pedometer.isAvailableAsync();
             setIsPedometerAvailable(isAvailable);
@@ -37,7 +37,7 @@ const App: React.FC = () => {
             }
         };
 
-        //Getting necessary permissions from user
+        // Getting necessary permissions from user
         const getPermissions = async () => {
             if (Platform.OS === 'ios') {
                 const { granted } = await Pedometer.requestPermissionsAsync();
@@ -62,7 +62,7 @@ const App: React.FC = () => {
             const isAvailable = await Pedometer.isAvailableAsync();
             setIsPedometerAvailable(isAvailable);
 
-            if(isAvailable) {
+            if (isAvailable) {
                 const subscription = Pedometer.watchStepCount((result: PedometerResult) => {
                     if (isCounting && !isPaused) {
                         setSteps(result.steps + manualSteps);
@@ -74,7 +74,7 @@ const App: React.FC = () => {
         };
 
         const startAccelerometerTracking = () => {
-            accelerometerSubscription = Accelerometer.addListener(accelerometerData => {
+            accelerometerSubscription = Accelerometer.addListener((accelerometerData) => {
                 setAccelerometerData(accelerometerData);
                 if (isCounting) {
                     detectExtraStep(accelerometerData);
@@ -83,13 +83,13 @@ const App: React.FC = () => {
             Accelerometer.setUpdateInterval(50);
         };
 
-        //Logic to detect extra steps using accelerometer
+        // Logic to detect extra steps using accelerometer
         const detectExtraStep = (data: { x: number; y: number; z: number }) => {
             const acceleration = Math.sqrt(data.x * data.x + data.y + data.z * data.z);
             const stepThreshold = 1.2;
 
             if (acceleration > stepThreshold) {
-                setManualSteps(prevSteps => prevSteps + 1);
+                setManualSteps((prevSteps) => prevSteps + 1);
             }
         };
 
@@ -141,22 +141,37 @@ const App: React.FC = () => {
     const handleStop = async () => {
         const sessionData = {
             steps: steps, // Total steps recorded
-            duration: `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`,
+            duration: `${hours.toString().padStart(2, '0')}:${minutes
+                .toString()
+                .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`,
             timestamp: new Date().toISOString(),
         };
-    
+
         // Retrieve existing sessions from AsyncStorage
         try {
             const savedSessions = await AsyncStorage.getItem('sessions');
             const sessions = savedSessions ? JSON.parse(savedSessions) : [];
             sessions.push(sessionData);
-    
+
             // Save updated sessions back to AsyncStorage
             await AsyncStorage.setItem('sessions', JSON.stringify(sessions));
+
+            // Update achievements
+            try {
+                const storedAchievements = await AsyncStorage.getItem('completedAchievements');
+                let completedAchievements = storedAchievements ? JSON.parse(storedAchievements) : [];
+
+                if (!completedAchievements.includes('1')) {
+                    completedAchievements.push('1'); // '1' is the ID of 'Touched Grass' achievement
+                    await AsyncStorage.setItem('completedAchievements', JSON.stringify(completedAchievements));
+                }
+            } catch (error) {
+                console.error('Failed to update achievements:', error);
+            }
         } catch (error) {
-            console.error("Error saving session:", error);
+            console.error('Error saving session:', error);
         }
-    
+
         setIsCounting(false);
         setSteps(0);
         setStartTimestamp(null);

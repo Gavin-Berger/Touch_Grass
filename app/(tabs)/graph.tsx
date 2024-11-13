@@ -82,7 +82,7 @@ const Graph = () => {
       <View style={styles.infoPanelTop}>
         <Text style={styles.infoText}>Total Steps: {totalSteps}</Text>
         <Text style={styles.infoText}>Average Steps: {averageSteps}</Text>
-        <Text style={styles.infoText}>Goal: {goal} steps</Text>
+        
       </View>
 
       {/* Steps Over Time Chart */}
@@ -98,7 +98,7 @@ const Graph = () => {
               },
               ...(goal !== null ? [{
                 data: Array(stepData.length).fill(goal),
-                color: (opacity = 1) => `rgba(255, 215, 0, ${opacity})`,
+                color: () => `rgba(255, 215, 0, 0.8)`,
                 withDots: false,
               }] : []),
             ],
@@ -151,6 +151,7 @@ const Graph = () => {
         <Text style={styles.infoText}>Date Range: {startDate} - {endDate}</Text>
         <Text style={styles.infoText}>Total Sessions: {sessions.length}</Text>
       </View>
+      
     </View>
   );
 };
@@ -208,12 +209,18 @@ const styles = StyleSheet.create({
   },
   infoPanelTop: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between', // Space out each container
+    alignItems: 'center',
     width: '100%',
     paddingVertical: 10,
+    paddingHorizontal: 10, // Adjust padding if needed
     backgroundColor: '#0B6E4F',
     borderRadius: 10,
     marginBottom: 10,
+  },
+  infoTextContainer: {
+    flex: 1, // Each container takes up equal space
+    alignItems: 'center',
   },
   totalCaloriesContainer: {
     backgroundColor: '#0B6E4F',
@@ -243,6 +250,7 @@ const styles = StyleSheet.create({
     color: '#D4EDDA',
     fontWeight: 'bold',
     textAlign: 'center',
+    flexWrap: 'wrap', // Allows text to wrap if it’s too long
   },
 });
 

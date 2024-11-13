@@ -3,12 +3,22 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import * as Notifications from 'expo-notifications'; // Import Notifications
 import 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 SplashScreen.preventAutoHideAsync();
+
+// Configure notifications (can be in RootLayout if needed)
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -21,6 +31,16 @@ export default function RootLayout() {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
+
+    // Request notification permissions
+    const requestPermissions = async () => {
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Please enable notifications in your settings.');
+      }
+    };
+
+    requestPermissions();
   }, [fontsLoaded]);
 
   const appTheme = colorScheme === 'dark' ? DarkTheme : DefaultTheme;

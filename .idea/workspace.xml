@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Updated graph.tsx line 49 text to be per session rather than per day.&#10;&#10;created button for Achievements page&#10;&#10;Updating the splash.png, and icon.png to TouchGrass1.png&#10;&#10;Created and inserted the achievements.tsx&#10;&#10;added the TouchGrass1.png to app.json">
-      <change afterPath="$PROJECT_DIR$/app/(tabs)/achievements.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/TouchGrass1.png" afterDir="false" />
+    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Merging with achievements and notification branch">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/graph.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/graph.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,7 +259,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730863600395</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Merging with achievements and notification branch">
+      <option name="closed" value="true" />
+      <created>1731514947675</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1731514947675</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -295,6 +296,8 @@
     <MESSAGE value="ensuring correct link name, wrapping the two children elements for ./set-goal." />
     <MESSAGE value="Replaced swipe-to-delete functionality with a delete button beside each session entry, including a confirmation prompt. This change simplifies session management and avoids potential compatibility issues with gesture handling in React Native v1.0.0, ensuring more consistent performance." />
     <MESSAGE value="Updated graph.tsx line 49 text to be per session rather than per day.&#10;&#10;created button for Achievements page&#10;&#10;Updating the splash.png, and icon.png to TouchGrass1.png&#10;&#10;Created and inserted the achievements.tsx&#10;&#10;added the TouchGrass1.png to app.json" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated graph.tsx line 49 text to be per session rather than per day.&#10;&#10;created button for Achievements page&#10;&#10;Updating the splash.png, and icon.png to TouchGrass1.png&#10;&#10;Created and inserted the achievements.tsx&#10;&#10;added the TouchGrass1.png to app.json" />
+    <MESSAGE value="Merging with main-11/12/2024" />
+    <MESSAGE value="Merging with achievements and notification branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merging with achievements and notification branch" />
   </component>
 </project>

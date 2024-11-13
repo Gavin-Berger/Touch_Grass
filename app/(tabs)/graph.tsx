@@ -7,36 +7,39 @@ import { useIsFocused } from '@react-navigation/native';
 const Graph = () => {
   const [sessions, setSessions] = useState<{ steps: number; duration: string; timestamp: string }[]>([]);
   const [averageSteps, setAverageSteps] = useState<number | null>(null);
+  const [totalSteps, setTotalSteps] = useState<number>(0);
   const [goal, setGoal] = useState<number | null>(null);
   const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+  const [totalCaloriesBurned, setTotalCaloriesBurned] = useState<number>(0);
   const isFocused = useIsFocused();
+  const caloriesPerStep = 0.04; // Estimated calories burned per step
+
+  const loadSessionsAndGoal = async () => {
+    try {
+      const savedSessions = await AsyncStorage.getItem('sessions');
+      if (savedSessions) {
+        const parsedSessions = JSON.parse(savedSessions);
+        setSessions(parsedSessions);
+        calculateAverageSteps(parsedSessions);
+        calculateTotalCalories(parsedSessions);
+        calculateTotalSteps(parsedSessions);
+      } else {
+        setSessions([]);
+      }
+
+      const savedGoal = await AsyncStorage.getItem('goal');
+      if (savedGoal) {
+        const parsedGoal = JSON.parse(savedGoal).steps;
+        setGoal(Number.isFinite(parsedGoal) ? parsedGoal : 0);
+      } else {
+        setGoal(0);
+      }
+    } catch (error) {
+      console.error("Failed to load data:", error);
+    }
+  };
 
   useEffect(() => {
-    // Function to load data from AsyncStorage
-    const loadSessionsAndGoal = async () => {
-      try {
-        const savedSessions = await AsyncStorage.getItem('sessions');
-        if (savedSessions) {
-          const parsedSessions = JSON.parse(savedSessions);
-          setSessions(parsedSessions);
-          calculateAverageSteps(parsedSessions);
-        } else {
-          setSessions([]);
-        }
-
-        const savedGoal = await AsyncStorage.getItem('goal');
-        if (savedGoal) {
-          const parsedGoal = JSON.parse(savedGoal).steps;
-          const validGoal = Number.isFinite(parsedGoal) ? parsedGoal : 0;
-          setGoal(validGoal);
-        } else {
-          setGoal(0);
-        }
-      } catch (error) {
-        console.error("Failed to load data:", error);
-      }
-    };
-
     if (isFocused) {
       loadSessionsAndGoal();
     }
@@ -48,68 +51,61 @@ const Graph = () => {
     return () => subscription.remove();
   }, []);
 
-  const calculateAverageSteps = (sessionsData: { steps: number; duration: string; timestamp: string }[]) => {
-    if (sessionsData.length === 0) {
-      setAverageSteps(0);
-      return;
-    }
-    const totalSteps = sessionsData.reduce((sum, session) => sum + session.steps, 0);
-    const average = totalSteps / sessionsData.length;
-    setAverageSteps(Number.isFinite(average) ? Math.round(average) : 0);
+  const calculateAverageSteps = (sessionsData: any[]) => {
+    const totalSteps = sessionsData.reduce((sum: any, session: { steps: any; }) => sum + (session.steps || 0), 0);
+    setAverageSteps(sessionsData.length > 0 ? Math.round(totalSteps / sessionsData.length) : 0);
   };
 
-  const stepData = sessions
-    .map(session => (Number.isFinite(session.steps) && session.steps > 0 ? session.steps : null))
-    .filter(value => value !== null);
+  const calculateTotalCalories = (sessionsData: any[]) => {
+    const total = sessionsData.reduce((sum: number, session: { steps: any; }) => sum + (session.steps || 0) * caloriesPerStep, 0);
+    setTotalCaloriesBurned(total);
+  };
 
-  const chartData = stepData.length > 0 ? stepData : [0];
+  const calculateTotalSteps = (sessionsData: any[]) => {
+    const total = sessionsData.reduce((sum: any, session: { steps: any; }) => sum + (session.steps || 0), 0);
+    setTotalSteps(total);
+  };
+
+  // Ensure all step data are numbers
+  const stepData = sessions.map(session => (Number.isFinite(session.steps) ? session.steps : 0));
+  const calorieChartData = stepData.map(steps => steps * caloriesPerStep);
 
   const labels = sessions
     .map(session => new Date(session.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))
     .filter((_, index) => index % 2 === 0);
 
-  // Set interval to fetch or update data every 10 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Placeholder for data fetch or update logic
-      console.log("Updating chart data...");
-    }, 10000); // Updates every 10 seconds
-
-    return () => clearInterval(interval); // Clear interval on unmount
-  }, []);
+  const startDate = labels[0] || '';
+  const endDate = labels[labels.length - 1] || '';
 
   return (
     <View style={styles.container}>
       <View style={styles.infoPanelTop}>
+        <Text style={styles.infoText}>Total Steps: {totalSteps}</Text>
         <Text style={styles.infoText}>Average Steps: {averageSteps}</Text>
         <Text style={styles.infoText}>Goal: {goal} steps</Text>
       </View>
 
+      {/* Steps Over Time Chart */}
       <View style={styles.chartContainer}>
+        <Text style={styles.chartTitle}>Steps Over Time</Text>
         <LineChart
           data={{
             labels: labels,
             datasets: [
               {
-                data: chartData,
+                data: stepData.length > 0 ? stepData : [0],
                 color: (opacity = 1) => `rgba(0, 153, 51, ${opacity})`,
               },
               ...(goal !== null ? [{
-                data: Array(chartData.length).fill(goal),
-                color: (opacity = 1) => `rgba(255, 99, 132, ${opacity})`,
+                data: Array(stepData.length).fill(goal),
+                color: (opacity = 1) => `rgba(255, 215, 0, ${opacity})`,
                 withDots: false,
               }] : []),
             ],
           }}
-          width={screenWidth - 32} // Responsive width
+          width={screenWidth - 32}
           height={220}
-          chartConfig={{
-            ...chartConfig,
-            propsForBackgroundLines: {
-              strokeDasharray: "0",
-              strokeWidth: 1,
-            },
-          }}
+          chartConfig={chartConfig}
           style={styles.chartStyle}
           onDataPointClick={(data) => {
             Alert.alert(`Step count on ${labels[data.index]}: ${data.value}`);
@@ -117,13 +113,47 @@ const Graph = () => {
         />
       </View>
 
+      {/* Calories Burned Over Time Chart */}
+      <View style={[styles.chartContainer, { marginBottom: 20 }]}>
+        <Text style={styles.chartTitle}>Calories Burned Over Time</Text>
+        <LineChart
+          data={{
+            labels: labels,
+            datasets: [
+              {
+                data: calorieChartData.length > 0 ? calorieChartData : [0],
+                color: (opacity = 1) => `rgba(255, 69, 0, ${opacity})`,
+              },
+            ],
+          }}
+          width={screenWidth - 32}
+          height={240} // Slightly increased height for label space
+          yAxisSuffix=" kcal"
+          chartConfig={{
+            ...chartConfig,
+            decimalPlaces: 2,
+          }}
+          style={styles.chartStyle}
+          fromZero={true}
+          onDataPointClick={(data) => {
+            Alert.alert(`Calories burned on ${labels[data.index]}: ${data.value.toFixed(2)} kcal`);
+          }}
+        />
+      </View>
+
+      {/* Total Calories Burned */}
+      <View style={styles.totalCaloriesContainer}>
+        <Text style={styles.totalCaloriesText}>Total Calories Burned: {totalCaloriesBurned.toFixed(2)} kcal</Text>
+      </View>
+
+      {/* Date Range and Total Sessions */}
       <View style={styles.infoPanelBottom}>
-        <Text style={styles.infoText}>Date Range: Nov 6 - Nov 12</Text>
+        <Text style={styles.infoText}>Date Range: {startDate} - {endDate}</Text>
         <Text style={styles.infoText}>Total Sessions: {sessions.length}</Text>
       </View>
     </View>
   );
-}
+};
 
 const chartConfig = {
   backgroundColor: '#1A3C40',
@@ -162,7 +192,15 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    marginVertical: 16,
+    marginVertical: 10,
+    width: '100%',
+  },
+  chartTitle: {
+    color: '#D4EDDA',
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 8,
   },
   chartStyle: {
     borderRadius: 16,
@@ -177,26 +215,34 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
   },
-  infoPanelBottom: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
+  totalCaloriesContainer: {
+    backgroundColor: '#0B6E4F',
     paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  totalCaloriesText: {
+    fontSize: 16,
+    color: '#FCAE1E',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  infoPanelBottom: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     backgroundColor: '#0B6E4F',
     borderRadius: 10,
     marginTop: 10,
   },
   infoText: {
-    fontSize: 16,
-    color: '#D4EDDA',
-    fontWeight: 'bold',
-  },
-  heading: {
-    fontSize: 24,
+    fontSize: 14,
     color: '#D4EDDA',
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 10,
   },
 });
 

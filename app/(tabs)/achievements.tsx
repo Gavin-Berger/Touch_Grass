@@ -12,7 +12,7 @@ const Achievements: React.FC = () => {
     const [completedAchievements, setCompletedAchievements] = useState<string[]>([]);
 
     // Load completed achievements from AsyncStorage when the component mounts
-    useEffect(() => {
+    useEffect(() => {  
         const loadAchievements = async () => {
             try {
                 const storedAchievements = await AsyncStorage.getItem('completedAchievements');
@@ -56,7 +56,7 @@ const Achievements: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0D0D0D',
+        backgroundColor: '#1A3C40',
         padding: 20,
     },
     heading: {

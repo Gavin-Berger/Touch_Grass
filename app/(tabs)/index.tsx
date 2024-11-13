@@ -1,18 +1,19 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Animated } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import Svg, { Circle } from 'react-native-svg';
 
-export default function Index() {
+type IconName = "list" | "bar-chart" | "flag" | "emoji-events";
+
+function Index() {
   const scaleAnim = React.useRef(new Animated.Value(1)).current;
 
-  // Jungle-like animation effect
   React.useEffect(() => {
     Animated.loop(
       Animated.sequence([
         Animated.timing(scaleAnim, {
-          toValue: 1.05,
+          toValue: 1.1,
           duration: 3000,
           useNativeDriver: true,
         }),
@@ -27,62 +28,27 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      {/* Background Jungle Layers */}
       <Svg height="100%" width="100%" style={styles.svgContainer}>
-        <Circle cx="20%" cy="30%" r="150" fill="rgba(34, 139, 34, 0.3)" />
-        <Circle cx="80%" cy="40%" r="120" fill="rgba(0, 128, 0, 0.2)" />
-        <Circle cx="50%" cy="80%" r="180" fill="rgba(34, 139, 34, 0.2)" />
-        <Circle cx="30%" cy="60%" r="90" fill="rgba(85, 107, 47, 0.25)" />
+        <Circle cx="20%" cy="30%" r="160" fill="rgba(34, 139, 34, 0.3)" />
+        <Circle cx="80%" cy="40%" r="140" fill="rgba(0, 128, 0, 0.25)" />
+        <Circle cx="50%" cy="85%" r="200" fill="rgba(34, 139, 34, 0.2)" />
+        <Circle cx="30%" cy="60%" r="100" fill="rgba(85, 107, 47, 0.3)" />
       </Svg>
 
-      {/* Centered "Touch Grass" Text with Animated Icon */}
-      <Link href="./run" asChild>
+      <Link href="/run" asChild>
         <TouchableOpacity style={styles.centeredContainer}>
-          <Text style={styles.text}>Touch Grass</Text>
+          <Text style={styles.mainText}>Touch Grass</Text>
           <Animated.View style={[styles.iconContainer, { transform: [{ scale: scaleAnim }] }]}>
             <MaterialIcons name="grass" size={240} color="#fff" />
           </Animated.View>
         </TouchableOpacity>
       </Link>
 
-      {/* Buttons Linking to Different Sections */}
-      <View style={styles.buttonContainer}>
-        {/* Log Button */}
-        <Link href="./log" asChild>
-          <TouchableOpacity style={styles.button}>
-            <MaterialIcons name="list" size={24} color="#fff" />
-            <Text style={styles.buttonText}>Log</Text>
-          </TouchableOpacity>
-        </Link>
-
-        {/* Graph Button */}
-        <Link href="./graph" asChild>
-          <TouchableOpacity style={styles.button}>
-            <MaterialIcons name="bar-chart" size={24} color="#fff" />
-            <Text style={styles.buttonText}>Graph</Text>
-          </TouchableOpacity>
-        </Link>
-
-        {/* Set Goal Button */}
-        <Link href="./set-goal" asChild>
-          <TouchableOpacity style={styles.button}>
-            <MaterialIcons name="flag" size={24} color="#fff" />
-            <Text style={styles.buttonText}>Set Goal</Text>
-          </TouchableOpacity>
-        </Link>
-
-        {/* Achievements Button */}
-        {/* This button links to the Achievements page and uses a trophy icon */}
-        <Link href="./achievements" asChild>
-          <TouchableOpacity style={styles.button}>
-            <MaterialIcons name="emoji-events" size={24} color="#fff" />
-            <Text style={styles.buttonText}>Achievements</Text>
-          </TouchableOpacity>
-        </Link>
-      </View>
     </View>
   );
 }
+
+export default Index;
 
 const styles = StyleSheet.create({
   container: {
@@ -90,7 +56,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#1A3C40',
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative',
     overflow: 'hidden',
   },
   svgContainer: {
@@ -104,51 +69,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 50,
   },
-  text: {
+  mainText: {
     color: '#D4EDDA',
-    fontSize: 36,
+    fontSize: 42,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 20,
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 4,
   },
   iconContainer: {
     marginVertical: 20,
   },
-  buttonContainer: {
-    width: '80%',
-    marginBottom: 100,
-  },
-  button: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#148F77',
-    padding: 15,
-    borderRadius: 8,
-    marginVertical: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    marginLeft: 10,
-  },
-  tabBar: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%',
-    height: 60,
-    backgroundColor: '#0D0D0D',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#333',
-  },
-  tabItem: {
-    alignItems: 'center',
-  },
-  tabText: {
-    color: '#fff',
-    fontSize: 12,
-    marginTop: 4,
-  },
-});
+ 
+})

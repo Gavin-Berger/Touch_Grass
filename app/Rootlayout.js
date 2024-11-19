@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import * as Notifications from 'expo-notifications'; // Import Notifications
 import 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message'; // Import Toast
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -58,6 +59,7 @@ export default function RootLayout() {
           <Stack.Screen name="not-found" options={{ title: 'Not Found' }} />
         </Stack>
       </ThemeProvider>
+      <Toast /> {/* Include the Toast component at the root level */}
     </GestureHandlerRootView>
   );
 }

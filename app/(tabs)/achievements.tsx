@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message'; // Import Toast for notifications
 
 const achievementsList = [
     { id: '1', title: 'Touched Grass', description: 'Start and finish your first session' },
@@ -12,7 +13,7 @@ const Achievements: React.FC = () => {
     const [completedAchievements, setCompletedAchievements] = useState<string[]>([]);
 
     // Load completed achievements from AsyncStorage when the component mounts
-    useEffect(() => {  
+    useEffect(() => {
         const loadAchievements = async () => {
             try {
                 const storedAchievements = await AsyncStorage.getItem('completedAchievements');
@@ -26,8 +27,52 @@ const Achievements: React.FC = () => {
         loadAchievements();
     }, []);
 
-    // Check if an achievement is completed
+    // Function to reset achievements
+    const resetAchievements = async () => {
+        Alert.alert(
+            "Reset Achievements",
+            "Are you sure you want to reset all achievements? This action cannot be undone.",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                {
+                    text: "Reset",
+                    style: "destructive",
+                    onPress: async () => {
+                        try {
+                            // Clear achievements from AsyncStorage and state
+                            await AsyncStorage.removeItem('completedAchievements');
+                            setCompletedAchievements([]);
+                            // Show toast notification for reset action
+                            Toast.show({
+                                type: 'success',
+                                text1: 'Achievements reset!',
+                                text2: 'All achievements have been cleared for testing.',
+                                duration: 4000, // Set the duration for 4 seconds
+                            });
+                        } catch (error) {
+                            console.error('Failed to reset achievements:', error);
+                        }
+                    }
+                }
+            ]
+        );
+    };
+
+    // Function to check if an achievement is completed
     const isAchievementCompleted = (id: string) => completedAchievements.includes(id);
+
+    // Trigger a toast notification when an achievement is unlocked
+    const triggerAchievementNotification = (achievementTitle: string) => {
+        Toast.show({
+            type: 'success',
+            text1: 'Achievement Unlocked!',
+            text2: `You completed: ${achievementTitle}`,
+            duration: 5000, // Notification persists for 5 seconds
+        });
+    };
 
     return (
         <View style={styles.container}>
@@ -46,9 +91,17 @@ const Achievements: React.FC = () => {
                             {item.title}
                         </Text>
                         <Text style={styles.description}>{item.description}</Text>
+                        {/* Trigger notification if achievement is completed */}
+                        {isAchievementCompleted(item.id) && triggerAchievementNotification(item.title)}
                     </View>
                 )}
             />
+            {/* Reset Achievements Button */}
+            <View style={styles.resetButtonContainer}>
+                <Button title="Reset Achievements" color="#FF6347" onPress={resetAchievements} />
+            </View>
+            {/* Toast Notification Component */}
+            <Toast ref={(ref) => Toast.setRef(ref)} />
         </View>
     );
 };
@@ -83,6 +136,10 @@ const styles = StyleSheet.create({
     },
     incompleteText: {
         color: 'gray', // Gray for incomplete achievements
+    },
+    resetButtonContainer: {
+        marginTop: 20,
+        alignItems: 'center',
     },
 });
 

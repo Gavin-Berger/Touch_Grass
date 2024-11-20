@@ -35,7 +35,7 @@ const Graph = () => {
         setGoal(0);
       }
     } catch (error) {
-      console.error("Failed to load data:", error);
+      console.error('Failed to load data:', error);
     }
   };
 
@@ -52,17 +52,17 @@ const Graph = () => {
   }, []);
 
   const calculateAverageSteps = (sessionsData: any[]) => {
-    const totalSteps = sessionsData.reduce((sum: any, session: { steps: any; }) => sum + (session.steps || 0), 0);
+    const totalSteps = sessionsData.reduce((sum: any, session: { steps: any }) => sum + (session.steps || 0), 0);
     setAverageSteps(sessionsData.length > 0 ? Math.round(totalSteps / sessionsData.length) : 0);
   };
 
   const calculateTotalCalories = (sessionsData: any[]) => {
-    const total = sessionsData.reduce((sum: number, session: { steps: any; }) => sum + (session.steps || 0) * caloriesPerStep, 0);
+    const total = sessionsData.reduce((sum: number, session: { steps: any }) => sum + (session.steps || 0) * caloriesPerStep, 0);
     setTotalCaloriesBurned(total);
   };
 
   const calculateTotalSteps = (sessionsData: any[]) => {
-    const total = sessionsData.reduce((sum: any, session: { steps: any; }) => sum + (session.steps || 0), 0);
+    const total = sessionsData.reduce((sum: any, session: { steps: any }) => sum + (session.steps || 0), 0);
     setTotalSteps(total);
   };
 
@@ -75,25 +75,24 @@ const Graph = () => {
     acc[date].steps += session.steps || 0;
     return acc;
   }, {});
-  
+
   // Extract labels and aggregated step data
   const labels = Object.keys(groupedData); // Unique dates for x-axis
-  const stepData = Object.values(groupedData).map(data => data.steps); // Aggregated steps
-  const calorieChartData = stepData.map(steps => steps * caloriesPerStep);
+  const stepData = Object.values(groupedData).map((data) => data.steps); // Aggregated steps
+  const calorieChartData = stepData.map((steps) => steps * caloriesPerStep);
 
   const startDate = labels[0] || '';
   const endDate = labels[labels.length - 1] || '';
 
   return (
     <View style={styles.container}>
-      <View style={styles.infoPanelTop}>
-        <Text style={styles.infoText}>Total Steps: {totalSteps}</Text>
-        <Text style={styles.infoText}>Average Steps: {averageSteps}</Text>
+      {/* Insights Title */}
+      <View style={styles.insightsTitleContainer}>
+        <Text style={styles.insightsTitle}>Insights</Text>
       </View>
 
       {/* Steps Over Time Chart */}
       <View style={styles.chartContainer}>
-        <Text style={styles.chartTitle}>Steps Over Time</Text>
         <LineChart
           data={{
             labels: labels,
@@ -102,26 +101,26 @@ const Graph = () => {
                 data: stepData.length > 0 ? stepData : [0],
                 color: (opacity = 1) => `rgba(0, 153, 51, ${opacity})`,
               },
-              ...(goal !== null ? [{
-                data: Array(stepData.length).fill(goal),
-                color: () => `rgba(255, 215, 0, 0.8)`,
-                withDots: false,
-              }] : []),
+              ...(goal !== null
+                ? [
+                    {
+                      data: Array(stepData.length).fill(goal),
+                      color: () => `rgba(255, 215, 0, 0.8)`,
+                      withDots: false,
+                    },
+                  ]
+                : []),
             ],
           }}
-          width={screenWidth - 32}
-          height={220}
+          width={screenWidth - 48}
+          height={200}
           chartConfig={chartConfig}
           style={styles.chartStyle}
-          onDataPointClick={(data) => {
-            Alert.alert(`Step count on ${labels[data.index]}: ${data.value}`);
-          }}
         />
       </View>
 
       {/* Calories Burned Over Time Chart */}
-      <View style={[styles.chartContainer, { marginBottom: 20 }]}>
-        <Text style={styles.chartTitle}>Calories Burned Over Time</Text>
+      <View style={styles.chartContainer}>
         <LineChart
           data={{
             labels: labels,
@@ -132,30 +131,32 @@ const Graph = () => {
               },
             ],
           }}
-          width={screenWidth - 32}
-          height={240} // Slightly increased height for label space
+          width={screenWidth - 48}
+          height={200}
           yAxisSuffix=" kcal"
-          chartConfig={{
-            ...chartConfig,
-            decimalPlaces: 2,
-          }}
+          chartConfig={chartConfig}
           style={styles.chartStyle}
-          fromZero={true}
-          onDataPointClick={(data) => {
-            Alert.alert(`Calories burned on ${labels[data.index]}: ${data.value.toFixed(2)} kcal`);
-          }}
         />
       </View>
 
-      {/* Total Calories Burned */}
-      <View style={styles.totalCaloriesContainer}>
-        <Text style={styles.totalCaloriesText}>Total Calories Burned: {totalCaloriesBurned.toFixed(2)} kcal</Text>
-      </View>
-
-      {/* Date Range and Total Sessions */}
-      <View style={styles.infoPanelBottom}>
-        <Text style={styles.infoText}>Date Range: {startDate} - {endDate}</Text>
-        <Text style={styles.infoText}>Total Sessions: {sessions.length}</Text>
+      {/* Summary Bar */}
+      <View style={styles.summaryBar}>
+        <View style={styles.summaryItem}>
+          <Text style={styles.summaryTitle}>Total Steps</Text>
+          <Text style={styles.summaryValue}>{totalSteps}</Text>
+        </View>
+        <View style={styles.summaryItem}>
+          <Text style={styles.summaryTitle}>Calories Burned</Text>
+          <Text style={styles.summaryValue}>{totalCaloriesBurned.toFixed(2)} kcal</Text>
+        </View>
+        <View style={styles.summaryItem}>
+          <Text style={styles.summaryTitle}>Average Steps</Text>
+          <Text style={styles.summaryValue}>{averageSteps}</Text>
+        </View>
+        <View style={styles.summaryItem}>
+          <Text style={styles.summaryTitle}>Sessions</Text>
+          <Text style={styles.summaryValue}>{sessions.length}</Text>
+        </View>
       </View>
     </View>
   );
@@ -176,10 +177,6 @@ const chartConfig = {
     strokeWidth: '2',
     stroke: '#FCAE1E',
   },
-  propsForBackgroundLines: {
-    strokeDasharray: "0",
-    strokeWidth: 1,
-  },
 };
 
 const styles = StyleSheet.create({
@@ -187,8 +184,34 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#1A3C40',
     alignItems: 'center',
-    justifyContent: 'center',
     padding: 16,
+  },
+  topBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#0B6E4F',
+    padding: 10,
+    borderRadius: 10,
+    width: '100%',
+    marginBottom: 10,
+  },
+  infoText: {
+    fontSize: 16,
+    color: '#D4EDDA',
+    fontWeight: 'bold',
+  },
+  insightsTitleContainer: {
+    backgroundColor: '#148F77',
+    width: '100%',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  insightsTitle: {
+    fontSize: 18,
+    color: '#D4EDDA',
+    fontWeight: 'bold',
   },
   chartContainer: {
     backgroundColor: '#148F77',
@@ -198,64 +221,36 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    marginVertical: 10,
+    marginVertical: 12, // Adjust for more space
     width: '100%',
-  },
-  chartTitle: {
-    color: '#D4EDDA',
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 8,
   },
   chartStyle: {
     borderRadius: 16,
-    alignSelf: 'center',
   },
-  infoPanelTop: {
+  summaryBar: {
     flexDirection: 'row',
-    justifyContent: 'space-between', // Space out each container
+    justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
-    paddingVertical: 10,
-    paddingHorizontal: 10, // Adjust padding if needed
     backgroundColor: '#0B6E4F',
     borderRadius: 10,
-    marginBottom: 10,
-  },
-  infoTextContainer: {
-    flex: 1, // Each container takes up equal space
-    alignItems: 'center',
-  },
-  totalCaloriesContainer: {
-    backgroundColor: '#0B6E4F',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
+    padding: 10,
     marginVertical: 10,
+    width: '100%',
+  },
+  summaryItem: {
+    flex: 1,
     alignItems: 'center',
   },
-  totalCaloriesText: {
-    fontSize: 16,
-    color: '#FCAE1E',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  infoPanelBottom: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: '#0B6E4F',
-    borderRadius: 10,
-    marginTop: 10,
-  },
-  infoText: {
+  summaryTitle: {
     fontSize: 14,
-    color: '#D4EDDA',
     fontWeight: 'bold',
-    textAlign: 'center',
-    flexWrap: 'wrap', // Allows text to wrap if it’s too long
+    color: '#D4EDDA',
+    marginBottom: 5,
+  },
+  summaryValue: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FCAE1E',
   },
 });
 

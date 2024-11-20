@@ -4,7 +4,6 @@ import { Pedometer, Accelerometer } from 'expo-sensors';
 import { useRouter } from 'expo-router';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Svg, { Path } from 'react-native-svg';
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
@@ -41,8 +40,8 @@ const App: React.FC = () => {
     
         horizontalPosition.value = withRepeat(
             withSequence(
-                withTiming(maxTranslateX, { duration: 2000 }), // Move to the right
-                withTiming(-maxTranslateX, { duration: 2000 }) // Move to the left
+                withTiming(maxTranslateX, { duration: 3000 }), // Move to the right
+                withTiming(-maxTranslateX, { duration: 3000 }) // Move to the left
             ),
             -1, // Repeat infinitely
             true // Alternate direction

@@ -10,6 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Notification from './Notification';
 
 const SetGoal: React.FC = () => {
   const [goalSteps, setGoalSteps] = useState('');
@@ -52,6 +53,13 @@ const SetGoal: React.FC = () => {
       Alert.alert('Success', 'Goal saved successfully!');
       calculateProgress(parseInt(goalSteps));
       Keyboard.dismiss();
+          // Update achievements for "Start of a Journey"
+          const storedAchievements = await AsyncStorage.getItem('completedAchievements');
+          const achievements = storedAchievements ? JSON.parse(storedAchievements) : [];
+          if (!achievements.includes('2')) { // '2' is the ID for the "Start of a Journey" achievement
+              achievements.push('2');
+              await AsyncStorage.setItem('completedAchievements', JSON.stringify(achievements));
+          }
     } catch (error) {
       console.error('Failed to save goal:', error);
     }

@@ -4,6 +4,17 @@ import { Pedometer, Accelerometer } from 'expo-sensors';
 import { useRouter } from 'expo-router';
 import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Svg, { Path } from 'react-native-svg';
+import Animated, {
+    useSharedValue,
+    useAnimatedStyle,
+    withRepeat,
+    withTiming,
+    withSequence,
+} from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Dimensions } from 'react-native';
 
 const App: React.FC = () => {
     const [steps, setSteps] = useState<number>(0);
@@ -19,11 +30,24 @@ const App: React.FC = () => {
     const [accelerometerData, setAccelerometerData] = useState({ x: 0, y: 0, z: 0 });
     const [manualSteps, setManualSteps] = useState<number>(0);
     const [pedometerSubscription, setPedometerSubscription] = useState<any>(null);
-
-    interface StepSubscription {
-        remove: () => void;
-    }
-
+    const bounce = useSharedValue(0);
+    const timerPulse = useSharedValue(1);
+    const horizontalPosition = useSharedValue(0);
+    const screenWidth = Dimensions.get('window').width;
+    const [isRunning, setIsRunning] = useState(false);
+    useEffect(() => {
+        const iconWidth = 100; // Width of your icon
+        const maxTranslateX = (screenWidth - iconWidth) / 2; // Keep it within bounds
+    
+        horizontalPosition.value = withRepeat(
+            withSequence(
+                withTiming(maxTranslateX, { duration: 2000 }), // Move to the right
+                withTiming(-maxTranslateX, { duration: 2000 }) // Move to the left
+            ),
+            -1, // Repeat infinitely
+            true // Alternate direction
+        );
+    }, []);
     useEffect(() => {
         let pedometerSubscription: any = null;
         let accelerometerSubscription: any = null;
@@ -128,7 +152,19 @@ const App: React.FC = () => {
             if (timerInterval) clearInterval(timerInterval);
         };
     }, [isCounting, isPaused, minutes]);
+    useEffect(() => {
+        bounce.value = withRepeat(withTiming(10, { duration: 1000 }), -1, true);
+        timerPulse.value = withRepeat(withTiming(1.0, { duration: 1500 }), -1, true);
+    }, []);
 
+
+    const animatedStyle = useAnimatedStyle(() => ({
+        transform: [{ translateX: horizontalPosition.value }],
+    }));
+
+    const timerPulseStyle = useAnimatedStyle(() => ({
+        transform: [{ scale: timerPulse.value }],
+    }));
     const handleStart = () => {
         setIsCounting(true);
         setIsPaused(false);
@@ -182,18 +218,28 @@ const App: React.FC = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <LinearGradient colors={['#1A3C40', '#148F77']} style={styles.container}>
+            {/* Animated Runner Icon */}
+            <Animated.View style={[styles.runningIcon, animatedStyle]}>
+             <MaterialCommunityIcons name="run" size={100} color="#FCAE1E" />
+                </Animated.View>
+
+            {/* Step Counter */}
             <Text style={styles.heading}>Step Counter</Text>
             {isPedometerAvailable ? (
                 <Text style={styles.steps}>Steps: {steps}</Text>
             ) : (
                 <Text style={styles.steps}>Pedometer not available.</Text>
             )}
-            <Text style={styles.timer}>
+
+            {/* Timer with Animation */}
+            <Animated.Text style={[styles.timer, timerPulseStyle]}>
                 {`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds
                     .toString()
                     .padStart(2, '0')}`}
-            </Text>
+            </Animated.Text>
+
+            {/* Buttons */}
             <View style={styles.buttonContainer}>
                 {isPaused ? (
                     <TouchableOpacity style={styles.resumeButton} onPress={handleStart}>
@@ -208,73 +254,62 @@ const App: React.FC = () => {
                     <Text style={styles.buttonText}>Stop</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </LinearGradient>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#1A3C40', // Change this to your desired color
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 20,
+    },
+    runningIcon: {
+        marginBottom: 20,
     },
     heading: {
-        fontSize: 28,
+        fontSize: 32,
         color: '#D4EDDA',
         marginBottom: 20,
         fontWeight: 'bold',
     },
     steps: {
-        fontSize: 22,
-        color: '#148F77',
-        marginBottom: 10,
+        fontSize: 24,
+        color: '#32CD32',
+        marginBottom: 15,
+        fontWeight: '600',
     },
     timer: {
-        fontSize: 30,
+        fontSize: 36,
         color: '#FCAE1E',
-        marginBottom: 20,
         fontWeight: 'bold',
+        marginVertical: 20,
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         marginTop: 30,
-        width: '100%',
+        width: '90%',
     },
     stopButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
         backgroundColor: '#8B0000',
-        paddingVertical: 12,
-        paddingHorizontal: 20,
+        padding: 12,
         borderRadius: 8,
-        marginHorizontal: 10,
     },
     pauseButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
         backgroundColor: '#FCAE1E',
-        paddingVertical: 12,
-        paddingHorizontal: 20,
+        padding: 12,
         borderRadius: 8,
-        marginHorizontal: 10,
     },
     resumeButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#148F77',
-        paddingVertical: 12,
-        paddingHorizontal: 20,
+        backgroundColor: '#32CD32',
+        padding: 12,
         borderRadius: 8,
-        marginHorizontal: 10,
     },
     buttonText: {
         color: '#fff',
         fontSize: 18,
         fontWeight: 'bold',
-        marginLeft: 5,
     },
 });
 

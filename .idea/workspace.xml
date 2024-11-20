@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Merging with achievements and notification branch">
-      <change beforePath="$PROJECT_DIR$/%ProgramData%/Microsoft/Windows/UUS/State/_active.uusver" beforeDir="false" afterPath="$PROJECT_DIR$/%ProgramData%/Microsoft/Windows/UUS/State/_active.uusver" afterDir="false" />
+    <list default="true" id="9f95afb3-4c80-4b89-a352-ff348bef94ec" name="Changes" comment="Editing the Notification style using react-native-toast-message,to have a drop down effect, for 5 seconds or 5000 milliseconds.&#10;&#10;adding a clear achievements button to the achievements page for testing purposes, it will only clear data related to cleared achievements effectively resetting them.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/(tabs)/achievements.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/achievements.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Rootlayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/Rootlayout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(tabs)/set-goal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(tabs)/set-goal.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -280,7 +278,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731515825245</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Editing the Notification style using react-native-toast-message,to have a drop down effect, for 5 seconds or 5000 milliseconds.&#10;&#10;adding a clear achievements button to the achievements page for testing purposes, it will only clear data related to cleared achievements effectively resetting them.">
+      <option name="closed" value="true" />
+      <created>1732060688703</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1732060688703</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -311,6 +317,7 @@
     <MESSAGE value="Updated graph.tsx line 49 text to be per session rather than per day.&#10;&#10;created button for Achievements page&#10;&#10;Updating the splash.png, and icon.png to TouchGrass1.png&#10;&#10;Created and inserted the achievements.tsx&#10;&#10;added the TouchGrass1.png to app.json" />
     <MESSAGE value="Merging with main-11/12/2024" />
     <MESSAGE value="Merging with achievements and notification branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merging with achievements and notification branch" />
+    <MESSAGE value="Editing the Notification style using react-native-toast-message,to have a drop down effect, for 5 seconds or 5000 milliseconds.&#10;&#10;adding a clear achievements button to the achievements page for testing purposes, it will only clear data related to cleared achievements effectively resetting them." />
+    <option name="LAST_COMMIT_MESSAGE" value="Editing the Notification style using react-native-toast-message,to have a drop down effect, for 5 seconds or 5000 milliseconds.&#10;&#10;adding a clear achievements button to the achievements page for testing purposes, it will only clear data related to cleared achievements effectively resetting them." />
   </component>
 </project>

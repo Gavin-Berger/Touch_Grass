@@ -3,8 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Animated } from "react-native
 import { MaterialIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import Svg, { Circle } from 'react-native-svg';
-
-type IconName = "list" | "bar-chart" | "flag" | "emoji-events";
+import Toast from 'react-native-toast-message'; // Import Toast
 
 function Index() {
   const scaleAnim = React.useRef(new Animated.Value(1)).current;
@@ -44,6 +43,8 @@ function Index() {
         </TouchableOpacity>
       </Link>
 
+      {/* Initialize the Toast component */}
+      <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
   );
 }
@@ -82,5 +83,4 @@ const styles = StyleSheet.create({
   iconContainer: {
     marginVertical: 20,
   },
- 
-})
+});

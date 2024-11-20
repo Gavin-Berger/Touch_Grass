@@ -42,15 +42,13 @@ const Achievements: React.FC = () => {
                     style: "destructive",
                     onPress: async () => {
                         try {
-                            // Clear achievements from AsyncStorage and state
                             await AsyncStorage.removeItem('completedAchievements');
                             setCompletedAchievements([]);
-                            // Show toast notification for reset action
                             Toast.show({
                                 type: 'success',
                                 text1: 'Achievements reset!',
                                 text2: 'All achievements have been cleared for testing.',
-                                duration: 4000, // Set the duration for 4 seconds
+                                duration: 4000,
                             });
                         } catch (error) {
                             console.error('Failed to reset achievements:', error);
@@ -61,18 +59,8 @@ const Achievements: React.FC = () => {
         );
     };
 
-    // Function to check if an achievement is completed
+    // Check if an achievement is completed
     const isAchievementCompleted = (id: string) => completedAchievements.includes(id);
-
-    // Trigger a toast notification when an achievement is unlocked
-    const triggerAchievementNotification = (achievementTitle: string) => {
-        Toast.show({
-            type: 'success',
-            text1: 'Achievement Unlocked!',
-            text2: `You completed: ${achievementTitle}`,
-            duration: 5000, // Notification persists for 5 seconds
-        });
-    };
 
     return (
         <View style={styles.container}>
@@ -91,8 +79,6 @@ const Achievements: React.FC = () => {
                             {item.title}
                         </Text>
                         <Text style={styles.description}>{item.description}</Text>
-                        {/* Trigger notification if achievement is completed */}
-                        {isAchievementCompleted(item.id) && triggerAchievementNotification(item.title)}
                     </View>
                 )}
             />

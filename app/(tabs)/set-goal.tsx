@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message'; // Import Toast
 
 const SetGoal: React.FC = () => {
     const [goalSteps, setGoalSteps] = useState('');
-    const [timeFrame, setTimeFrame] = useState('daily');
+    const [timeFrame, setTimeFrame] = useState('daily'); // Only 'daily' is used now
     const [progress, setProgress] = useState<number>(0);
 
     // Load saved goal on component mount
@@ -34,8 +35,6 @@ const SetGoal: React.FC = () => {
             const goalEndDate = new Date();
 
             if (frame === 'daily') goalEndDate.setDate(now.getDate() - 1);
-            else if (frame === 'weekly') goalEndDate.setDate(now.getDate() - 7);
-            else if (frame === 'monthly') goalEndDate.setMonth(now.getMonth() - 1);
 
             const stepsInTimeFrame = sessions.reduce((total: number, session: any) => {
                 const sessionDate = new Date(session.timestamp);
@@ -54,7 +53,6 @@ const SetGoal: React.FC = () => {
         calculateProgress(timeFrame);
     }, [timeFrame]);
 
-    // Save the goal to AsyncStorage and update achievements
     const handleSaveGoal = async () => {
         if (isNaN(parseInt(goalSteps))) {
             alert('Please enter a valid numeric goal.');
@@ -63,7 +61,8 @@ const SetGoal: React.FC = () => {
         const goalData = { steps: parseInt(goalSteps), timeFrame };
         try {
             await AsyncStorage.setItem('goal', JSON.stringify(goalData));
-            alert('Goal saved successfully!');
+            alert('Goal saved successfully!'); // Keep this alert for saving the goal
+
             calculateProgress(timeFrame); // Update progress after saving
 
             // Update achievements for "Start of a Journey"
@@ -72,7 +71,12 @@ const SetGoal: React.FC = () => {
             if (!achievements.includes('2')) { // '2' is the ID for the "Start of a Journey" achievement
                 achievements.push('2');
                 await AsyncStorage.setItem('completedAchievements', JSON.stringify(achievements));
-                alert('Achievement Unlocked: Start of a Journey');
+                Toast.show({
+                    type: 'success',
+                    text1: 'Achievement Unlocked!',
+                    text2: 'Start of a Journey',
+                    duration: 3000, // Customize duration if needed
+                });
             }
         } catch (error) {
             console.error("Failed to save goal:", error);
@@ -91,25 +95,14 @@ const SetGoal: React.FC = () => {
                     value={goalSteps}
                     onChangeText={setGoalSteps}
                 />
-                
+
+                {/* Only 'Daily' button remains */}
                 <View style={styles.timeFrameContainer}>
                     <TouchableOpacity
                         style={[styles.timeFrameButton, timeFrame === 'daily' && styles.selectedTimeFrame]}
                         onPress={() => setTimeFrame('daily')}
                     >
                         <Text style={styles.timeFrameText}>Daily</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.timeFrameButton, timeFrame === 'weekly' && styles.selectedTimeFrame]}
-                        onPress={() => setTimeFrame('weekly')}
-                    >
-                        <Text style={styles.timeFrameText}>Weekly</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.timeFrameButton, timeFrame === 'monthly' && styles.selectedTimeFrame]}
-                        onPress={() => setTimeFrame('monthly')}
-                    >
-                        <Text style={styles.timeFrameText}>Monthly</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -119,6 +112,7 @@ const SetGoal: React.FC = () => {
                 <Text style={styles.progressText}>
                     Progress: {progress} / {goalSteps || '0'} steps
                 </Text>
+                <Toast ref={(ref) => Toast.setRef(ref)} /> {/* Initialize Toast */}
             </View>
         </TouchableWithoutFeedback>
     );

@@ -96,23 +96,42 @@ const App: React.FC = () => {
             }
         };
 
-        const startAccelerometerTracking = () => {
-            accelerometerSubscription = Accelerometer.addListener((accelerometerData) => {
+                const startAccelerometerTracking = () => {
+            accelerometerSubscription = Accelerometer.addListener(accelerometerData => {
                 setAccelerometerData(accelerometerData);
                 if (isCounting) {
                     detectExtraStep(accelerometerData);
                 }
             });
-            Accelerometer.setUpdateInterval(50);
+            Accelerometer.setUpdateInterval(500);
         };
 
-        // Logic to detect extra steps using accelerometer
+        //Logic to detect extra steps using accelerometer
         const detectExtraStep = (data: { x: number; y: number; z: number }) => {
-            const acceleration = Math.sqrt(data.x * data.x + data.y + data.z * data.z);
-            const stepThreshold = 1.2;
+            const currentTime = Date.now();
+            const stepThreshold = 44;
 
-            if (acceleration > stepThreshold) {
-                setManualSteps((prevSteps) => prevSteps + 1);
+            smoothedData = {
+                x: smoothedData.x + lowPassFactor * (data.x - smoothedData.x),
+                y: smoothedData.y + lowPassFactor * (data.y - smoothedData.y),
+                z: smoothedData.z + lowPassFactor * (data.z - smoothedData.z),
+            };
+
+            const acceleration = Math.sqrt(
+                smoothedData.x * smoothedData.x + smoothedData.y * smoothedData.y + smoothedData.z * smoothedData.z
+            );
+
+            if (!isStopped && acceleration > stepThreshold && (currentTime - lastStepTime > timeBuffer)) {
+                setManualSteps(manualSteps + 1);
+                lastStepTime = currentTime;
+            }
+
+            if (acceleration < 1.2) {
+                if (currentTime - lastStepTime > inactivityThreshold) {
+                    isStopped = true;
+                }
+            } else {
+                isStopped = false;
             }
         };
 

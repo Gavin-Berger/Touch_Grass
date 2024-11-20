@@ -1,177 +1,185 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Keyboard, TouchableWithoutFeedback, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Alert,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toast from 'react-native-toast-message'; // Import Toast
 
 const SetGoal: React.FC = () => {
-    const [goalSteps, setGoalSteps] = useState('');
-    const [timeFrame, setTimeFrame] = useState('daily'); // Only 'daily' is used now
-    const [progress, setProgress] = useState<number>(0);
+  const [goalSteps, setGoalSteps] = useState('');
+  const [progress, setProgress] = useState<number>(0);
 
-    // Load saved goal on component mount
-    useEffect(() => {
-        const loadSavedGoal = async () => {
-            try {
-                const savedGoal = await AsyncStorage.getItem('goal');
-                if (savedGoal) {
-                    const { steps, timeFrame } = JSON.parse(savedGoal);
-                    setGoalSteps(steps.toString());
-                    setTimeFrame(timeFrame);
-                }
-                calculateProgress(timeFrame); // Calculate progress based on the loaded time frame
-            } catch (error) {
-                console.error("Failed to load goal:", error);
-            }
-        };
-        loadSavedGoal();
-    }, []);
-
-    // Calculate progress based on session logs and selected time frame
-    const calculateProgress = async (frame: string) => {
-        const savedSessions = await AsyncStorage.getItem('sessions');
-        if (savedSessions) {
-            const sessions = JSON.parse(savedSessions);
-            const now = new Date();
-            const goalEndDate = new Date();
-
-            if (frame === 'daily') goalEndDate.setDate(now.getDate() - 1);
-
-            const stepsInTimeFrame = sessions.reduce((total: number, session: any) => {
-                const sessionDate = new Date(session.timestamp);
-                if (sessionDate >= goalEndDate) {
-                    return total + session.steps;
-                }
-                return total;
-            }, 0);
-
-            setProgress(stepsInTimeFrame);
+  useEffect(() => {
+    const loadSavedGoal = async () => {
+      try {
+        const savedGoal = await AsyncStorage.getItem('goal');
+        if (savedGoal) {
+          const { steps } = JSON.parse(savedGoal);
+          setGoalSteps(steps.toString());
+          calculateProgress(steps);
         }
+      } catch (error) {
+        console.error('Failed to load goal:', error);
+      }
     };
+    loadSavedGoal();
+  }, []);
 
-    // Update progress when the time frame changes
-    useEffect(() => {
-        calculateProgress(timeFrame);
-    }, [timeFrame]);
+  const calculateProgress = async (goal: number) => {
+    const savedSessions = await AsyncStorage.getItem('sessions');
+    if (savedSessions) {
+      const sessions = JSON.parse(savedSessions);
+      const totalSteps = sessions.reduce((sum: number, session: any) => sum + session.steps, 0);
+      setProgress(Math.min(totalSteps, goal)); // Cap progress at the goal value
+    }
+  };
 
-    const handleSaveGoal = async () => {
-        if (isNaN(parseInt(goalSteps))) {
-            alert('Please enter a valid numeric goal.');
-            return;
-        }
-        const goalData = { steps: parseInt(goalSteps), timeFrame };
-        try {
-            await AsyncStorage.setItem('goal', JSON.stringify(goalData));
-            alert('Goal saved successfully!'); // Keep this alert for saving the goal
+  const handleSaveGoal = async () => {
+    if (isNaN(parseInt(goalSteps))) {
+      Alert.alert('Invalid Input', 'Please enter a valid numeric goal.');
+      return;
+    }
 
-            calculateProgress(timeFrame); // Update progress after saving
+    const goalData = { steps: parseInt(goalSteps) };
+    try {
+      await AsyncStorage.setItem('goal', JSON.stringify(goalData));
+      Alert.alert('Success', 'Goal saved successfully!');
+      calculateProgress(parseInt(goalSteps));
+      Keyboard.dismiss();
+    } catch (error) {
+      console.error('Failed to save goal:', error);
+    }
+  };
 
-            // Update achievements for "Start of a Journey"
-            const storedAchievements = await AsyncStorage.getItem('completedAchievements');
-            const achievements = storedAchievements ? JSON.parse(storedAchievements) : [];
-            if (!achievements.includes('2')) { // '2' is the ID for the "Start of a Journey" achievement
-                achievements.push('2');
-                await AsyncStorage.setItem('completedAchievements', JSON.stringify(achievements));
-                Toast.show({
-                    type: 'success',
-                    text1: 'Achievement Unlocked!',
-                    text2: 'Start of a Journey',
-                    duration: 3000, // Customize duration if needed
-                });
-            }
-        } catch (error) {
-            console.error("Failed to save goal:", error);
-        }
-        Keyboard.dismiss(); // Dismiss the keyboard after saving
-    };
+  return (
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        {/* Header */}
+        <View style={styles.headerContainer}>
+          <Text style={styles.heading}>Set Your Step Goal</Text>
+          <View style={styles.divider} />
+        </View>
 
-    return (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={styles.container}>
-                <Text style={styles.heading}>Set a Step Goal</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter step goal"
-                    keyboardType="numeric"
-                    value={goalSteps}
-                    onChangeText={setGoalSteps}
-                />
+        {/* Input Field */}
+        <TextInput
+          style={styles.input}
+          placeholder="Enter step goal"
+          placeholderTextColor="#8FA8B6"
+          keyboardType="numeric"
+          value={goalSteps}
+          onChangeText={setGoalSteps}
+        />
 
-                {/* Only 'Daily' button remains */}
-                <View style={styles.timeFrameContainer}>
-                    <TouchableOpacity
-                        style={[styles.timeFrameButton, timeFrame === 'daily' && styles.selectedTimeFrame]}
-                        onPress={() => setTimeFrame('daily')}
-                    >
-                        <Text style={styles.timeFrameText}>Daily</Text>
-                    </TouchableOpacity>
-                </View>
+        {/* Save Button */}
+        <TouchableOpacity style={styles.button} onPress={handleSaveGoal}>
+          <Text style={styles.buttonText}>Save Goal</Text>
+        </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={handleSaveGoal}>
-                    <Text style={styles.buttonText}>Save Goal</Text>
-                </TouchableOpacity>
-                <Text style={styles.progressText}>
-                    Progress: {progress} / {goalSteps || '0'} steps
-                </Text>
-            </View>
-        </TouchableWithoutFeedback>
-    );
+        {/* Progress Display */}
+        <View style={styles.progressContainer}>
+          <Text style={styles.progressLabel}>Progress</Text>
+          <View style={styles.progressBar}>
+            <View
+              style={[
+                styles.progressFill,
+                { width: `${Math.min((progress / parseInt(goalSteps || '1')) * 100, 100)}%` },
+              ]}
+            />
+          </View>
+          <Text style={styles.progressText}>
+            {progress} / {goalSteps || '0'} steps
+          </Text>
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#1A3C40',
-        padding: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    heading: {
-        fontSize: 24,
-        color: '#D4EDDA',
-        marginBottom: 20,
-    },
-    input: {
-        width: '80%',
-        padding: 10,
-        backgroundColor: '#232323',
-        color: '#fff',
-        borderRadius: 8,
-        marginBottom: 10,
-    },
-    timeFrameContainer: {
-        flexDirection: 'row',
-        marginBottom: 20,
-    },
-    timeFrameButton: {
-        backgroundColor: '#148F77',
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        borderRadius: 8,
-        marginHorizontal: 5,
-    },
-    selectedTimeFrame: {
-        backgroundColor: '#1E90FF',
-    },
-    timeFrameText: {
-        color: '#fff',
-        fontSize: 16,
-    },
-    button: {
-        backgroundColor: '#148F77',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 8,
-        marginBottom: 20,
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 18,
-    },
-    progressText: {
-        color: '#D4EDDA',
-        fontSize: 18,
-        marginTop: 20,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#1A3C40',
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerContainer: {
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  heading: {
+    fontSize: 26,
+    color: '#D4EDDA',
+    fontWeight: 'bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  divider: {
+    width: '60%',
+    height: 2,
+    backgroundColor: '#148F77',
+    marginTop: 5,
+  },
+  input: {
+    width: '80%',
+    padding: 15,
+    backgroundColor: '#2A474E',
+    color: '#D4EDDA',
+    borderRadius: 12,
+    marginBottom: 20,
+    fontSize: 18,
+    textAlign: 'center',
+    borderWidth: 1,
+    borderColor: '#148F77',
+  },
+  button: {
+    width: '80%',
+    backgroundColor: '#148F77',
+    padding: 15,
+    borderRadius: 12,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  progressContainer: {
+    marginTop: 30,
+    width: '80%',
+    alignItems: 'center',
+  },
+  progressLabel: {
+    color: '#D4EDDA',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  progressBar: {
+    width: '100%',
+    height: 20,
+    backgroundColor: '#2A474E',
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: '#FCAE1E',
+    borderRadius: 10,
+  },
+  progressText: {
+    color: '#FCAE1E',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
 });
 
 export default SetGoal;

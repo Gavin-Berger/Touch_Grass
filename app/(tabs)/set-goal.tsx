@@ -10,7 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Notification from './Notification';
+import Toast from 'react-native-toast-message'; // Import Toast
 
 const SetGoal: React.FC = () => {
   const [goalSteps, setGoalSteps] = useState('');
@@ -43,7 +43,12 @@ const SetGoal: React.FC = () => {
 
   const handleSaveGoal = async () => {
     if (isNaN(parseInt(goalSteps))) {
-      Alert.alert('Invalid Input', 'Please enter a valid numeric goal.');
+      Toast.show({
+        type: 'error',
+        text1: 'Invalid Input',
+        text2: 'Please enter a valid numeric goal.',
+        duration: 5000, // Longer duration
+      });
       return;
     }
 
@@ -53,13 +58,20 @@ const SetGoal: React.FC = () => {
       Alert.alert('Success', 'Goal saved successfully!');
       calculateProgress(parseInt(goalSteps));
       Keyboard.dismiss();
-          // Update achievements for "Start of a Journey"
-          const storedAchievements = await AsyncStorage.getItem('completedAchievements');
-          const achievements = storedAchievements ? JSON.parse(storedAchievements) : [];
-          if (!achievements.includes('2')) { // '2' is the ID for the "Start of a Journey" achievement
-              achievements.push('2');
-              await AsyncStorage.setItem('completedAchievements', JSON.stringify(achievements));
-          }
+
+      // Update achievements for "Start of a Journey"
+      const storedAchievements = await AsyncStorage.getItem('completedAchievements');
+      const achievements = storedAchievements ? JSON.parse(storedAchievements) : [];
+      if (!achievements.includes('2')) {
+        achievements.push('2');
+        await AsyncStorage.setItem('completedAchievements', JSON.stringify(achievements));
+        Toast.show({
+          type: 'success',
+          text1: 'Achievement Unlocked!',
+          text2: 'Start of a Journey',
+          duration: 20000, // Longer duration for achievements
+        });
+      }
     } catch (error) {
       console.error('Failed to save goal:', error);
     }
@@ -68,13 +80,11 @@ const SetGoal: React.FC = () => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        {/* Header */}
         <View style={styles.headerContainer}>
           <Text style={styles.heading}>Set Your Step Goal</Text>
           <View style={styles.divider} />
         </View>
 
-        {/* Input Field */}
         <TextInput
           style={styles.input}
           placeholder="Enter step goal"
@@ -84,12 +94,10 @@ const SetGoal: React.FC = () => {
           onChangeText={setGoalSteps}
         />
 
-        {/* Save Button */}
         <TouchableOpacity style={styles.button} onPress={handleSaveGoal}>
           <Text style={styles.buttonText}>Save Goal</Text>
         </TouchableOpacity>
 
-        {/* Progress Display */}
         <View style={styles.progressContainer}>
           <Text style={styles.progressLabel}>Progress</Text>
           <View style={styles.progressBar}>
@@ -104,6 +112,8 @@ const SetGoal: React.FC = () => {
             {progress} / {goalSteps || '0'} steps
           </Text>
         </View>
+
+        <Toast />
       </View>
     </TouchableWithoutFeedback>
   );

@@ -1,9 +1,12 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { useCallback } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; // Corrected import
 import { Link } from 'expo-router';
 import Svg, { Circle } from 'react-native-svg';
-import Toast from 'react-native-toast-message'; // Import Toast
+import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 function Index() {
   const scaleAnim = React.useRef(new Animated.Value(1)).current;
@@ -25,6 +28,42 @@ function Index() {
     ).start();
   }, []);
 
+const checkForNewAchievements = async () => {
+  try {
+    const storedAchievements = await AsyncStorage.getItem('completedAchievements');
+    const achievements = storedAchievements ? JSON.parse(storedAchievements) : [];
+    const shownAchievements = await AsyncStorage.getItem('shownAchievements');
+    const alreadyShown = shownAchievements ? JSON.parse(shownAchievements) : [];
+
+    // Filter new achievements that haven't been shown
+    const newAchievements = achievements.filter((id: string) => !alreadyShown.includes(id));
+
+    if (newAchievements.length > 0) {
+      for (const achievementId of newAchievements) {
+        const achievementData = getAchievementData(achievementId);
+
+        if (achievementData) {
+          // Show toast for the new achievement
+          Toast.show({
+            type: 'success',
+            text1: 'Achievement Unlocked!',
+            text2: achievementData.title,
+            duration: 5000, // Duration for the toast
+          });
+
+          // Add this achievement to the shown list
+          alreadyShown.push(achievementId);
+        }
+      }
+
+      // Save the updated list back to AsyncStorage
+      await AsyncStorage.setItem('shownAchievements', JSON.stringify(alreadyShown));
+    }
+  } catch (error) {
+    console.error('Failed to check for new achievements:', error);
+  }
+};
+
   return (
     <>
       <View style={styles.container}>
@@ -45,7 +84,6 @@ function Index() {
         </Link>
       </View>
 
-      {/* Initialize the Toast component at the root level */}
       <Toast />
     </>
   );

@@ -37,7 +37,7 @@ const App: React.FC = () => {
     useEffect(() => {
         const iconWidth = 100; // Width of your icon
         const maxTranslateX = (screenWidth - iconWidth) / 2; // Keep it within bounds
-    
+
         horizontalPosition.value = withRepeat(
             withSequence(
                 withTiming(maxTranslateX, { duration: 3000 }), // Move to the right

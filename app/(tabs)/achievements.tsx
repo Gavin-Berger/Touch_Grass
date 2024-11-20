@@ -4,7 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message'; // Import Toast for notifications
 
 const achievementsList = [
-    { id: '1', title: 'Touched Grass', description: 'Start and finish your first session' },
+    // Commented out "Touched Grass" achievement
+    // { id: '1', title: 'Touched Grass', description: 'Start and finish your first session' },
     { id: '2', title: 'Start of a Journey', description: 'Set your first goal' },
     // Add more achievements as needed
 ];
@@ -44,7 +45,7 @@ const Achievements: React.FC = () => {
             [
                 {
                     text: "Cancel",
-                    style: "cancel"
+                    style: "cancel",
                 },
                 {
                     text: "Reset",
@@ -57,13 +58,13 @@ const Achievements: React.FC = () => {
                                 type: 'success',
                                 text1: 'Achievements reset!',
                                 text2: 'All achievements have been cleared for testing.',
-                                duration: 4000,
+                                duration: 5000, // Updated duration for better visibility
                             });
                         } catch (error) {
                             console.error('Failed to reset achievements:', error);
                         }
-                    }
-                }
+                    },
+                },
             ]
         );
     };
@@ -82,7 +83,7 @@ const Achievements: React.FC = () => {
                         <Text
                             style={[
                                 styles.title,
-                                isAchievementCompleted(item.id) ? styles.completedText : styles.incompleteText
+                                isAchievementCompleted(item.id) ? styles.completedText : styles.incompleteText,
                             ]}
                         >
                             {item.title}
@@ -95,6 +96,8 @@ const Achievements: React.FC = () => {
             <View style={styles.resetButtonContainer}>
                 <Button title="Reset Achievements" color="#FF6347" onPress={resetAchievements} />
             </View>
+            {/* Toast Notification Component */}
+            <Toast />
         </View>
     );
 };

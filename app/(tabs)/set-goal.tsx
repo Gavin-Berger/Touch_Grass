@@ -112,7 +112,6 @@ const SetGoal: React.FC = () => {
                 <Text style={styles.progressText}>
                     Progress: {progress} / {goalSteps || '0'} steps
                 </Text>
-                <Toast ref={(ref) => Toast.setRef(ref)} /> {/* Initialize Toast */}
             </View>
         </TouchableWithoutFeedback>
     );

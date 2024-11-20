@@ -12,19 +12,28 @@ const achievementsList = [
 const Achievements: React.FC = () => {
     const [completedAchievements, setCompletedAchievements] = useState<string[]>([]);
 
-    // Load completed achievements from AsyncStorage when the component mounts
-    useEffect(() => {
-        const loadAchievements = async () => {
-            try {
-                const storedAchievements = await AsyncStorage.getItem('completedAchievements');
-                if (storedAchievements) {
-                    setCompletedAchievements(JSON.parse(storedAchievements));
-                }
-            } catch (error) {
-                console.error('Failed to load achievements:', error);
+    // Function to load completed achievements from AsyncStorage
+    const loadAchievements = async () => {
+        try {
+            const storedAchievements = await AsyncStorage.getItem('completedAchievements');
+            if (storedAchievements) {
+                setCompletedAchievements(JSON.parse(storedAchievements));
             }
-        };
+        } catch (error) {
+            console.error('Failed to load achievements:', error);
+        }
+    };
+
+    // Initial load and refresh achievements when the component mounts
+    useEffect(() => {
         loadAchievements();
+
+        // Listener to update achievements whenever they change
+        const interval = setInterval(() => {
+            loadAchievements();
+        }, 1000); // Checks for updates every second
+
+        return () => clearInterval(interval); // Cleanup on unmount
     }, []);
 
     // Function to reset achievements
@@ -86,8 +95,6 @@ const Achievements: React.FC = () => {
             <View style={styles.resetButtonContainer}>
                 <Button title="Reset Achievements" color="#FF6347" onPress={resetAchievements} />
             </View>
-            {/* Toast Notification Component */}
-            <Toast ref={(ref) => Toast.setRef(ref)} />
         </View>
     );
 };

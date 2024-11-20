@@ -26,26 +26,28 @@ function Index() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Svg height="100%" width="100%" style={styles.svgContainer}>
-        <Circle cx="20%" cy="30%" r="160" fill="rgba(34, 139, 34, 0.3)" />
-        <Circle cx="80%" cy="40%" r="140" fill="rgba(0, 128, 0, 0.25)" />
-        <Circle cx="50%" cy="85%" r="200" fill="rgba(34, 139, 34, 0.2)" />
-        <Circle cx="30%" cy="60%" r="100" fill="rgba(85, 107, 47, 0.3)" />
-      </Svg>
+    <>
+      <View style={styles.container}>
+        <Svg height="100%" width="100%" style={styles.svgContainer}>
+          <Circle cx="20%" cy="30%" r="160" fill="rgba(34, 139, 34, 0.3)" />
+          <Circle cx="80%" cy="40%" r="140" fill="rgba(0, 128, 0, 0.25)" />
+          <Circle cx="50%" cy="85%" r="200" fill="rgba(34, 139, 34, 0.2)" />
+          <Circle cx="30%" cy="60%" r="100" fill="rgba(85, 107, 47, 0.3)" />
+        </Svg>
 
-      <Link href="/run" asChild>
-        <TouchableOpacity style={styles.centeredContainer}>
-          <Text style={styles.mainText}>Touch Grass</Text>
-          <Animated.View style={[styles.iconContainer, { transform: [{ scale: scaleAnim }] }]}>
-            <MaterialIcons name="grass" size={240} color="#fff" />
-          </Animated.View>
-        </TouchableOpacity>
-      </Link>
+        <Link href="/run" asChild>
+          <TouchableOpacity style={styles.centeredContainer}>
+            <Text style={styles.mainText}>Touch Grass</Text>
+            <Animated.View style={[styles.iconContainer, { transform: [{ scale: scaleAnim }] }]}>
+              <MaterialIcons name="grass" size={240} color="#fff" />
+            </Animated.View>
+          </TouchableOpacity>
+        </Link>
+      </View>
 
-      {/* Initialize the Toast component */}
-      <Toast ref={(ref) => Toast.setRef(ref)} />
-    </View>
+      {/* Initialize the Toast component at the root level */}
+      <Toast />
+    </>
   );
 }
 

@@ -3,10 +3,10 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import * as Notifications from 'expo-notifications'; // Import Notifications
+import * as Notifications from 'expo-notifications';
 import 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import Toast from 'react-native-toast-message'; // Import Toast
+import Toast from 'react-native-toast-message';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -59,7 +59,7 @@ export default function RootLayout() {
           <Stack.Screen name="not-found" options={{ title: 'Not Found' }} />
         </Stack>
       </ThemeProvider>
-      <Toast /> {/* Include the Toast component at the root level */}
+      <Toast /> {/* Correctly add Toast here to ensure it is globally available */}
     </GestureHandlerRootView>
   );
 }

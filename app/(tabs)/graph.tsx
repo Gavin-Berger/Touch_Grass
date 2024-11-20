@@ -66,13 +66,20 @@ const Graph = () => {
     setTotalSteps(total);
   };
 
-  // Ensure all step data are numbers
-  const stepData = sessions.map(session => (Number.isFinite(session.steps) ? session.steps : 0));
+  // Group sessions by unique dates
+  const groupedData: { [key: string]: { steps: number } } = sessions.reduce((acc: { [key: string]: { steps: number } }, session) => {
+    const date = new Date(session.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    if (!acc[date]) {
+      acc[date] = { steps: 0 };
+    }
+    acc[date].steps += session.steps || 0;
+    return acc;
+  }, {});
+  
+  // Extract labels and aggregated step data
+  const labels = Object.keys(groupedData); // Unique dates for x-axis
+  const stepData = Object.values(groupedData).map(data => data.steps); // Aggregated steps
   const calorieChartData = stepData.map(steps => steps * caloriesPerStep);
-
-  const labels = sessions
-    .map(session => new Date(session.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))
-    .filter((_, index) => index % 2 === 0);
 
   const startDate = labels[0] || '';
   const endDate = labels[labels.length - 1] || '';
@@ -82,7 +89,6 @@ const Graph = () => {
       <View style={styles.infoPanelTop}>
         <Text style={styles.infoText}>Total Steps: {totalSteps}</Text>
         <Text style={styles.infoText}>Average Steps: {averageSteps}</Text>
-        
       </View>
 
       {/* Steps Over Time Chart */}
@@ -151,7 +157,6 @@ const Graph = () => {
         <Text style={styles.infoText}>Date Range: {startDate} - {endDate}</Text>
         <Text style={styles.infoText}>Total Sessions: {sessions.length}</Text>
       </View>
-      
     </View>
   );
 };

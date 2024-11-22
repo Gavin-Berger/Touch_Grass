@@ -47,11 +47,24 @@ const App: React.FC = () => {
             true // Alternate direction
         );
     }, []);
+
+    const inactivityThreshold = 1000;
+    let lastStepTime = 0;
+    const timeBuffer = 1000;
+    const lowPassFactor = 1;
+
+    let smoothedData = { x: 0, y: 0, z: 0 };
+    let isStopped = false;
+
+    interface StepSubscription {
+        remove: () => void;
+    }
+    
     useEffect(() => {
         let pedometerSubscription: any = null;
         let accelerometerSubscription: any = null;
 
-        // Making sure that device app is loaded on has a pedometer
+        //Making sure that device app is loaded on has a pedometer
         const checkPedometerAvailability = async () => {
             const isAvailable = await Pedometer.isAvailableAsync();
             setIsPedometerAvailable(isAvailable);
@@ -60,7 +73,7 @@ const App: React.FC = () => {
             }
         };
 
-        // Getting necessary permissions from user
+        //Getting necessary permissions from user
         const getPermissions = async () => {
             if (Platform.OS === 'ios') {
                 const { granted } = await Pedometer.requestPermissionsAsync();
@@ -85,7 +98,7 @@ const App: React.FC = () => {
             const isAvailable = await Pedometer.isAvailableAsync();
             setIsPedometerAvailable(isAvailable);
 
-            if (isAvailable) {
+            if(isAvailable) {
                 const subscription = Pedometer.watchStepCount((result: PedometerResult) => {
                     if (isCounting && !isPaused) {
                         setSteps(result.steps + manualSteps);
@@ -96,7 +109,7 @@ const App: React.FC = () => {
             }
         };
 
-                const startAccelerometerTracking = () => {
+        const startAccelerometerTracking = () => {
             accelerometerSubscription = Accelerometer.addListener(accelerometerData => {
                 setAccelerometerData(accelerometerData);
                 if (isCounting) {
@@ -109,7 +122,7 @@ const App: React.FC = () => {
         //Logic to detect extra steps using accelerometer
         const detectExtraStep = (data: { x: number; y: number; z: number }) => {
             const currentTime = Date.now();
-            const stepThreshold = 44;
+            const stepThreshold = 48;
 
             smoothedData = {
                 x: smoothedData.x + lowPassFactor * (data.x - smoothedData.x),
@@ -228,6 +241,7 @@ const App: React.FC = () => {
 
         setIsCounting(false);
         setSteps(0);
+        setManualSteps(0);
         setStartTimestamp(null);
         setSeconds(0);
         setMinutes(0);

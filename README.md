@@ -110,10 +110,5 @@ This project is licensed under the [MIT License](LICENSE).
 ## Contributions
 Contributions, issues, and feature requests are welcome! Feel free to check out the [issues page](https://github.com/your-username/TouchGrass/issues).
 
-## Contact
-For any questions or support, reach out at:
-- **Email**: your-email@example.com
-- **GitHub**: https://github.com/your-username
-
 
 

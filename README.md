@@ -103,7 +103,7 @@ The app uses the `expo-sensors` package to track steps during a session. Ensure 
 ### Common Errors
 - **Plugin Errors**: Ensure all dependencies are compatible with your Expo SDK version.
 - **Step Tracking on Emulator**: Some step-tracking features may not function on emulators. Use a physical device for full functionality.
--**Step Tracking on Android**: The Expo pedometer module is not currently supported on Android devices, so step tracking is not functional on Android. However, every other part of the app is still functional and each screen can be viewed.
+- **Step Tracking on Android**: The Expo pedometer module is not currently supported on Android devices, so step tracking is not functional on Android. However, every other part of the app is still functional and each screen can be viewed.
 
 ## License
 This project is licensed under the [MIT License](LICENSE).

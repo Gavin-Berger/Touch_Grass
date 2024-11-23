@@ -36,6 +36,7 @@ Before you get started, make sure you have the following installed:
 1. **With an Emulator**:
    - **Android**: Run the app using Android Studio's emulator by pressing “a” in the terminal to automatically launch android emulator (assuming it’s installed)
    - **iOS**: Run the app using the iOS simulator (macOS only).
+   
    expo run:android
    # or
    expo run:ios

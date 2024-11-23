@@ -20,7 +20,7 @@ Before you get started, make sure you have the following installed:
 ## Installation
 
 1. **Clone the Repository**:
-   git clone https://github.com/your-username/TouchGrass.git
+   git clone https://github.com/Gavin-Berger/Touch_Grass
    cd TouchGrass
 
 2. **Install Dependencies**:

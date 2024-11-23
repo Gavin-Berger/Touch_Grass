@@ -1,50 +1,119 @@
-# Welcome to your Expo app 👋
+# TouchGrass
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Overview
+**TouchGrass** is a mobile application built with React Native and Expo that encourages users to be active by tracking their steps, logging walking/running sessions, setting fitness goals, and earning achievements. The app features a modern and interactive UI with support for tracking and displaying user progress.
 
-## Get started
+## Features
+- **Step Tracking**: Counts user steps during a session.
+- **Session Logging**: Saves details of each session including step count, duration, and completion timestamp.
+- **Goal Setting**: Allows users to set step goals and track their progress over time.
+- **Achievements**: Motivates users with achievements that unlock as goals and tasks are completed.
+- **Interactive UI**: Engaging and visually appealing interface.
 
-1. Install dependencies
+## Prerequisites
+Before you get started, make sure you have the following installed:
+- **Node.js** (version 14.x or newer)
+- **npm** or **yarn** (comes with Node.js)
+- **Expo CLI**: Install Expo CLI globally by running:
+  npm install -g expo-cli
 
-   ```bash
+## Installation
+
+1. **Clone the Repository**:
+   git clone https://github.com/your-username/TouchGrass.git
+   cd TouchGrass
+
+2. **Install Dependencies**:
    npm install
-   ```
+   # or
+   yarn install
 
-2. Start the app
+3. **Run the Development Server**:
+   expo start
 
-   ```bash
-    npx expo start
-   ```
+## Running the App
 
-In the output, you'll find options to open the app in a
+1. **With an Emulator**:
+   - **Android**: Run the app using Android Studio's emulator by pressing “a” in the terminal to automatically launch android emulator (assuming it’s installed)
+   - **iOS**: Run the app using the iOS simulator (macOS only).
+   expo run:android
+   # or
+   expo run:ios
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+2. **With a Physical Device**:
+   - Download the **Expo Go** app from the App Store or Google Play Store.
+   - Scan the QR code displayed in your terminal or browser after running `expo start`.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Project Structure
+.
+├── assets                # App assets (images, icons, etc.)
+├── components            # Reusable components for the app
+├── screens               # Main screens like Run, Log, Achievements
+├── navigation            # Navigation configuration
+├── App.js                # Main entry point
+└── app.json              # Expo configuration file
 
-## Get a fresh project
+## Configuration
+Ensure your `app.json` file is set up with the necessary permissions and plugins for a smooth experience:
+{
+  "expo": {
+    "name": "TouchGrass",
+    "slug": "TouchGrass",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "plugins": [
+      "expo-router",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification-icon.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
+    "android": {
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACTIVITY_RECOGNITION",
+        "VIBRATE"
+      ]
+    }
+  }
+}
 
-When you're ready, run:
+## Key Features Explanation
 
-```bash
-npm run reset-project
-```
+### Step Tracking
+The app uses the `expo-sensors` package to track steps during a session. Ensure your device allows step tracking and has the necessary permissions.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Logging and Achievements
+**AsyncStorage** is used to save and retrieve session logs and completed achievements. This ensures data persistence between app uses.
 
-## Learn more
+## Dependencies
+- **expo**: For building and running the app.
+- **react-native**: Core framework for developing native apps.
+- **expo-sensors**: For step counting and pedometer functionality.
+- **@react-native-async-storage/async-storage**: For storing session and achievement data.
+- **expo-notifications**: For handling notifications (optional, if using notification features).
 
-To learn more about developing your project with Expo, look at the following resources:
+## Potential Issues
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Common Errors
+- **Plugin Errors**: Ensure all dependencies are compatible with your Expo SDK version.
+- **Step Tracking on Emulator**: Some step-tracking features may not function on emulators. Use a physical device for full functionality.
+-**Step Tracking on Android**: The Expo pedometer module is not currently supported on Android devices, so step tracking is not functional on Android. However, every other part of the app is still functional and each screen can be viewed.
 
-## Join the community
+## License
+This project is licensed under the [MIT License](LICENSE).
 
-Join our community of developers creating universal apps.
+## Contributions
+Contributions, issues, and feature requests are welcome! Feel free to check out the [issues page](https://github.com/your-username/TouchGrass/issues).
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Contact
+For any questions or support, reach out at:
+- **Email**: your-email@example.com
+- **GitHub**: https://github.com/your-username
+
+
+
